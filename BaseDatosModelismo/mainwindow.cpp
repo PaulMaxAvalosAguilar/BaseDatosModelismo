@@ -5,22 +5,32 @@
 #include <memory>
 #include <QDebug>
 #include <BaseDatos/marca.h>
+#include <BaseDatos/escala.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    listaMarcas()
+    listaMarcas(),
+    listaEscalas(),
+    man(DatabaseManager::instance())
+
 {
     ui->setupUi(this);
-    DatabaseManager &man = DatabaseManager::instance();
-
 
     listaMarcas = man.marcadao.getAllRecords();
     for(uint i = 0; i < listaMarcas->size(); i++){
 
-
-        ui->marcaCB->addItem(listaMarcas->at(i)->getNombre(), QVariant::fromValue(*listaMarcas->at(i)));
+        ui->marcaCB->addItem(listaMarcas->at(i)->getNombre(),
+                             QVariant::fromValue(*listaMarcas->at(i)));
     }
+
+    listaEscalas = man.escaladao.getAllRecords();
+    for(uint i = 0; i < listaEscalas->size(); i++){
+        ui->escalaCB->addItem(listaEscalas->at(i)->getValor(),
+                              QVariant::fromValue(*listaEscalas->at(i)));
+    }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -30,19 +40,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    DatabaseManager &man = DatabaseManager::instance();
+    Modelo modelo;
 
-    Modelo *modelo = new Modelo();
+    modelo.setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex())
+                     .value<Marca>().getNombre());
 
-    modelo->setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex()).value<Marca>().getNombre());
+    modelo.setCodigo(ui->codigole->text());
+    modelo.setNombre(ui->nombrele->text());
 
-    modelo->setCodigo(ui->codigole->text());
-    modelo->setNombre(ui->nombrele->text());
-    modelo->setEscala(ui->escalale->text());
-    modelo->setNumeroUnidades(ui->unidadesSpinBox->value());
+    modelo.setEscala(ui->escalaCB->itemData(ui->escalaCB->currentIndex())
+                     .value<Escala>().getValor());
 
-    man.modelodao.addRecord(*modelo);
+    modelo.setNumeroUnidades(ui->unidadesSpinBox->value());
 
-    delete modelo;
+    man.modelodao.addRecord(modelo);
 
 }

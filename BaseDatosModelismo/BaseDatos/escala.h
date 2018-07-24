@@ -2,6 +2,7 @@
 #define ESCALA_H
 
 #include <QString>
+#include <QMetaType>
 
 class Escala
 {
@@ -19,3 +20,5 @@ private:
 };
 
 #endif // ESCALA_H
+
+Q_DECLARE_METATYPE(Escala)
