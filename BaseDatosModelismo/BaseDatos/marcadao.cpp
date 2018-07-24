@@ -59,6 +59,7 @@ unique_ptr<vector<unique_ptr<Marca>>> MarcaDao::getAllRecords() const
 {
     QSqlQuery query("SELECT * FROM Marca", mDatabase);
     query.exec();
+    DatabaseManager::debugQuery(query);
     unique_ptr<vector<unique_ptr<Marca>>> list(new vector<unique_ptr<Marca>>());
     while(query.next()) {
         unique_ptr<Marca> marca(new Marca());

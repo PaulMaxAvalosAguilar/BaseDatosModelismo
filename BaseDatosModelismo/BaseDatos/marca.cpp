@@ -5,6 +5,11 @@ Marca::Marca()
 
 }
 
+Marca::~Marca()
+{
+
+}
+
 int Marca::getId() const
 {
     return id;

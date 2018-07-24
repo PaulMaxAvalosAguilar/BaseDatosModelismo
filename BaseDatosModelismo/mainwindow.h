@@ -23,7 +23,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    std::unique_ptr<std::vector<Marca> > listaMarcas;
+    std::unique_ptr<std::vector<std::unique_ptr<Marca>>> listaMarcas;
 };
 
 #endif // MAINWINDOW_H

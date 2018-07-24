@@ -67,6 +67,7 @@ unique_ptr<vector<unique_ptr<Modelo>>> ModeloDao::getAllRecords() const
 {
     QSqlQuery query("SELECT * FROM Modelo", mDatabase);
     query.exec();
+    DatabaseManager::debugQuery(query);
     unique_ptr<vector<unique_ptr<Modelo>>> list(new vector<unique_ptr<Modelo>>());
     while(query.next()) {
         unique_ptr<Modelo> modelo(new Modelo());

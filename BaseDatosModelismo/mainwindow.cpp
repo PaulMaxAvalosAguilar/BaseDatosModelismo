@@ -3,15 +3,24 @@
 #include "BaseDatos/DatabaseManager/databasemanager.h"
 #include "BaseDatos/modelo.h"
 #include <memory>
+#include <QDebug>
+#include <BaseDatos/marca.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    listaMarcas()
 {
     ui->setupUi(this);
     DatabaseManager &man = DatabaseManager::instance();
-    listaMarcas(man.marcadao.getAllRecords());
 
+
+    listaMarcas = man.marcadao.getAllRecords();
+    for(uint i = 0; i < listaMarcas->size(); i++){
+
+
+        ui->marcaCB->addItem(listaMarcas->at(i)->getNombre(), QVariant::fromValue(*listaMarcas->at(i)));
+    }
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +34,8 @@ void MainWindow::on_pushButton_clicked()
 
     Modelo *modelo = new Modelo();
 
-    modelo->setMarca(ui->marcaCB->itemText(ui->marcaCB->currentIndex()));
+    modelo->setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex()).value<Marca>().getNombre());
+
     modelo->setCodigo(ui->codigole->text());
     modelo->setNombre(ui->nombrele->text());
     modelo->setEscala(ui->escalale->text());
