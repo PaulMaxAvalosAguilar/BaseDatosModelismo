@@ -34,7 +34,9 @@ SOURCES += \
     BaseDatos/escala.cpp \
     BaseDatos/escaladao.cpp \
     escalamanager.cpp \
-    marcamanager.cpp
+    marcamanager.cpp \
+    aniadirmanager.cpp \
+    aniadirdialog.cpp
 
 
 HEADERS += \
@@ -47,11 +49,15 @@ HEADERS += \
     BaseDatos/escala.h \
     BaseDatos/escaladao.h \
     escalamanager.h \
-    marcamanager.h
+    marcamanager.h \
+    aniadirmanager.h \
+    aniadirdialog.h
 
 
 FORMS += \
         mainwindow.ui \
     escalamanager.ui \
-    marcamanager.ui
+    marcamanager.ui \
+    aniadirmanager.ui \
+    aniadirdialog.ui
 
