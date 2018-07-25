@@ -12,6 +12,7 @@ ModelosManager::ModelosManager(QWidget *parent) :
     listaModelos()
 {
     ui->setupUi(this);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     updateTable();
 
