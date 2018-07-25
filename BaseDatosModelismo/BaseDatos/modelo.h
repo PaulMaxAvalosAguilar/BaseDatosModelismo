@@ -8,11 +8,13 @@ class Modelo
 public:
     Modelo();
 
+
+
     int getId() const;
     void setId(int value);
 
-    QString getMarca() const;
-    void setMarca(const QString &value);
+    int getMarca() const;
+    void setMarca(int value);
 
     QString getCodigo() const;
     void setCodigo(const QString &value);
@@ -20,18 +22,18 @@ public:
     QString getNombre() const;
     void setNombre(const QString &value);
 
+    int getEscala() const;
+    void setEscala(int value);
+
     int getNumeroUnidades() const;
     void setNumeroUnidades(int value);
 
-    QString getEscala() const;
-    void setEscala(const QString &value);
-
 private:
     int id;
-    QString marca;
+    int marca;
     QString codigo;
     QString nombre;
-    QString escala;
+    int escala;
     int numeroUnidades;
 };
 

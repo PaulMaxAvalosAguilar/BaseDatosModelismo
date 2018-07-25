@@ -21,7 +21,8 @@ public:
     void removeRecord(int recordId);
     std::unique_ptr<std::vector<std::unique_ptr<Escala>>> getAllRecords() const;
 
-    std::unique_ptr<Escala> getRecord(int recordId) const;
+    std::unique_ptr<std::vector<std::unique_ptr<Escala>>> getRecord(int recordId) const;
+
 
 
 signals:

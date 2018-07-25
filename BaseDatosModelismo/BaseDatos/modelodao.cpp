@@ -18,7 +18,7 @@ void ModeloDao::init() const
 {
     if (!mDatabase.tables().contains("Modelo")) {
         QSqlQuery query(mDatabase);
-        query.exec("CREATE TABLE Modelo (id INTEGER PRIMARY KEY AUTOINCREMENT, marca TEXT,codigo TEXT,nombre TEXT,escala TEXT,numeroUnidades INTEGER)");
+        query.exec("CREATE TABLE Modelo (id INTEGER PRIMARY KEY AUTOINCREMENT, marca INTEGER,codigo TEXT,nombre TEXT,escala INTEGER,numeroUnidades INTEGER)");
         DatabaseManager::debugQuery(query);
     }
 }
@@ -72,29 +72,33 @@ unique_ptr<vector<unique_ptr<Modelo>>> ModeloDao::getAllRecords() const
     while(query.next()) {
         unique_ptr<Modelo> modelo(new Modelo());
         modelo->setId(query.value("id").toInt());
-        modelo->setMarca(query.value("marca").toString());
+        modelo->setMarca(query.value("marca").toInt());
         modelo->setCodigo(query.value("codigo").toString());
         modelo->setNombre(query.value("nombre").toString());
-        modelo->setEscala(query.value("escala").toString());
+        modelo->setEscala(query.value("escala").toInt());
         modelo->setNumeroUnidades(query.value("numeroUnidades").toInt());
         list->push_back(move(modelo));
     }
     return list;
 }
 
-std::unique_ptr<Modelo> ModeloDao::getRecord(int recordId) const
+unique_ptr<vector<unique_ptr<Modelo>>> ModeloDao::getRecord(int recordId) const
 {
     QSqlQuery query(mDatabase);
     query.prepare("SELECT * FROM Modelo WHERE id = (:id)");
     query.bindValue(":id", recordId);
     query.exec();
     DatabaseManager::debugQuery(query);
-    std::unique_ptr<Modelo> modelo(new Modelo());
-    modelo->setId(query.value("id").toInt());
-    modelo->setMarca(query.value("marca").toString());
-    modelo->setCodigo(query.value("codigo").toString());
-    modelo->setNombre(query.value("nombre").toString());
-    modelo->setEscala(query.value("escala").toString());
-    modelo->setNumeroUnidades(query.value("numeroUnidades").toInt());
-    return modelo;
+    unique_ptr<vector<unique_ptr<Modelo>>> list(new vector<unique_ptr<Modelo>>());
+    while(query.next()) {
+        std::unique_ptr<Modelo> modelo(new Modelo());
+        modelo->setId(query.value("id").toInt());
+        modelo->setMarca(query.value("marca").toInt());
+        modelo->setCodigo(query.value("codigo").toString());
+        modelo->setNombre(query.value("nombre").toString());
+        modelo->setEscala(query.value("escala").toInt());
+        modelo->setNumeroUnidades(query.value("numeroUnidades").toInt());
+        list->push_back(move(modelo));
+    }
+    return list;
 }

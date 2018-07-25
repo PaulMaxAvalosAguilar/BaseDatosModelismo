@@ -42,13 +42,13 @@ Modelo ModeloDialog::modelo()
 
 
     model.setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex())
-                   .value<Marca>().getNombre());
+                                     .value<Marca>().getId());
 
     model.setCodigo(ui->codigole->text());
     model.setNombre(ui->nombrele->text());
 
     model.setEscala(ui->escalaCB->itemData(ui->escalaCB->currentIndex())
-                    .value<Escala>().getValor());
+                    .value<Escala>().getId());
 
     model.setNumeroUnidades(ui->unidadesSpinBox->value());
 

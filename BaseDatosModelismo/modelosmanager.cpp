@@ -56,6 +56,7 @@ void ModelosManager::updateTable()
 
     ui->tableWidget->setRowCount(0);
 
+
     for(uint i = 0; i < listaModelos->size(); i++){
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
@@ -64,16 +65,25 @@ void ModelosManager::updateTable()
                                          listaModelos->at(i)->getId())));
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Marca, new QTableWidgetItem(
-                                     listaModelos->at(i)->getMarca()));
+
+                                     man.marcadao.getRecord(listaModelos->at(i)->getMarca())
+                                     ->at(0)->getNombre()
+
+                                     ));
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Codigo, new QTableWidgetItem(
                                      listaModelos->at(i)->getCodigo()));
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Nombre, new QTableWidgetItem(
                                      listaModelos->at(i)->getNombre()));
+
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Escala, new QTableWidgetItem(
-                                     listaModelos->at(i)->getNombre()));
+
+                                     man.escaladao.getRecord(listaModelos->at(i)->getEscala())
+                                     ->at(0)->getValor()
+
+                                     ));
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Unidades, new QTableWidgetItem(
                                      QString::number(

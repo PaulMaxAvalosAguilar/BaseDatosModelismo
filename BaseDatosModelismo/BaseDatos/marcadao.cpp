@@ -70,15 +70,19 @@ unique_ptr<vector<unique_ptr<Marca>>> MarcaDao::getAllRecords() const
     return list;
 }
 
-std::unique_ptr<Marca> MarcaDao::getRecord(int recordId) const
+unique_ptr<vector<unique_ptr<Marca>>> MarcaDao::getRecord(int recordId) const
 {
     QSqlQuery query(mDatabase);
     query.prepare("SELECT * FROM Marca WHERE id = (:id)");
     query.bindValue(":id", recordId);
     query.exec();
     DatabaseManager::debugQuery(query);
-    std::unique_ptr<Marca> marca(new Marca());
-    marca->setId(query.value("id").toInt());
-    marca->setNombre(query.value("nombre").toString());
-    return marca;
+    unique_ptr<vector<unique_ptr<Marca>>> list(new vector<unique_ptr<Marca>>());
+    while(query.next()){
+        std::unique_ptr<Marca> marca(new Marca());
+        marca->setId(query.value("id").toInt());
+        marca->setNombre(query.value("nombre").toString());
+        list->push_back(move(marca));
+    }
+    return list;
 }

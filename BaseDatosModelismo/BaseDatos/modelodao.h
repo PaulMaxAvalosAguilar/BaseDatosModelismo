@@ -21,7 +21,7 @@ public:
     void removeRecord(int recordId);
     std::unique_ptr<std::vector<std::unique_ptr<Modelo>>> getAllRecords() const;
 
-    std::unique_ptr<Modelo> getRecord(int recordId) const;
+    std::unique_ptr<std::vector<std::unique_ptr<Modelo>>> getRecord(int recordId) const;
 
 
 signals:

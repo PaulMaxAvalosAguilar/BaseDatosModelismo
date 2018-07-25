@@ -70,17 +70,22 @@ unique_ptr<vector<unique_ptr<Escala>>> EscalaDao::getAllRecords() const
     return list;
 }
 
-std::unique_ptr<Escala> EscalaDao::getRecord(int recordId) const
+unique_ptr<vector<unique_ptr<Escala>>> EscalaDao::getRecord(int recordId) const
 {
     QSqlQuery query(mDatabase);
     query.prepare("SELECT * FROM Escala WHERE id = (:id)");
     query.bindValue(":id", recordId);
     query.exec();
     DatabaseManager::debugQuery(query);
-    std::unique_ptr<Escala> escala(new Escala());
-    escala->setId(query.value("id").toInt());
-    escala->setValor(query.value("valor").toString());
-    return escala;
+    unique_ptr<vector<unique_ptr<Escala>>> list(new vector<unique_ptr<Escala>>());
+    while(query.next()) {
+        std::unique_ptr<Escala> escala(new Escala());
+        escala->setId(query.value("id").toInt());
+        escala->setValor(query.value("valor").toString());
+        list->push_back(move(escala));
+    }
+    return list;
 }
+
 
 

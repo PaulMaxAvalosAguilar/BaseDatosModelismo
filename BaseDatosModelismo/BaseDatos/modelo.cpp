@@ -16,12 +16,12 @@ void Modelo::setId(int value)
     id = value;
 }
 
-QString Modelo::getMarca() const
+int Modelo::getMarca() const
 {
     return marca;
 }
 
-void Modelo::setMarca(const QString &value)
+void Modelo::setMarca(int value)
 {
     marca = value;
 }
@@ -46,6 +46,16 @@ void Modelo::setNombre(const QString &value)
     nombre = value;
 }
 
+int Modelo::getEscala() const
+{
+    return escala;
+}
+
+void Modelo::setEscala(int value)
+{
+    escala = value;
+}
+
 int Modelo::getNumeroUnidades() const
 {
     return numeroUnidades;
@@ -56,12 +66,3 @@ void Modelo::setNumeroUnidades(int value)
     numeroUnidades = value;
 }
 
-QString Modelo::getEscala() const
-{
-    return escala;
-}
-
-void Modelo::setEscala(const QString &value)
-{
-    escala = value;
-}
