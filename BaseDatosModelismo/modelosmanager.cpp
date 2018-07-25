@@ -3,6 +3,7 @@
 #include "aniadirdialog.h"
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
+#include <QScrollBar>
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -41,7 +42,17 @@ void ModelosManager::on_addPB_clicked()
 
 void ModelosManager::updateTable()
 {
+
+    QScrollBar *verticalScroll = ui->tableWidget->verticalScrollBar();
+    QScrollBar *horizontalScroll = ui->tableWidget->verticalScrollBar();
+    int lastVscrollposition = verticalScroll->value();
+    int lastHscrollposition = horizontalScroll->value();
+
+
+
     listaModelos = man.modelodao.getAllRecords();
+
+    ui->tableWidget->setRowCount(0);
 
     for(uint i = 0; i < listaModelos->size(); i++){
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
@@ -66,4 +77,7 @@ void ModelosManager::updateTable()
                                      QString::number(
                                          listaModelos->at(i)->getNumeroUnidades())));
     }
+
+    verticalScroll->setValue(lastVscrollposition);
+    horizontalScroll->setValue(lastHscrollposition);
 }
