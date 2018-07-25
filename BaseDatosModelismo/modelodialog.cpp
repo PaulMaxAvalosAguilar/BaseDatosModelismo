@@ -1,6 +1,6 @@
 #include "modelodialog.h"
 #include "ui_aniadirdialog.h"
-
+#include "QDebug"
 
 ModeloDialog::ModeloDialog(QWidget *parent) :
     QDialog(parent),
@@ -20,12 +20,14 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id,
                              int numeroUnidades):
     QDialog(parent),
     ui(new Ui::AniadirDialog),
+    listaMarcas(),
+    listaEscalas(),
     man(DatabaseManager::instance())
 {
-    ReadDependencies();
+
     ui->codigole->setText(codigo);
     ui->nombrele->setText(nombre);
-    ui->unidadesSpinBox->setValue(numeroUnidades);
+
 }
 
 ModeloDialog::~ModeloDialog()
@@ -54,11 +56,13 @@ Modelo ModeloDialog::modelo()
 
 void ModeloDialog::ReadDependencies()
 {
+
     listaMarcas = man.marcadao.getAllRecords();
     for(uint i = 0; i < listaMarcas->size(); i++){
 
         ui->marcaCB->addItem(listaMarcas->at(i)->getNombre(),
                              QVariant::fromValue(*listaMarcas->at(i)));
+
     }
 
     listaEscalas = man.escaladao.getAllRecords();
@@ -66,6 +70,8 @@ void ModeloDialog::ReadDependencies()
         ui->escalaCB->addItem(listaEscalas->at(i)->getValor(),
                               QVariant::fromValue(*listaEscalas->at(i)));
     }
+
+
 }
 
 void ModeloDialog::on_buttonBox_accepted()

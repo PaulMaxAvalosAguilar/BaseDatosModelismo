@@ -24,7 +24,7 @@ private slots:
     void on_addPB_clicked();
     void updateTable();
 
-    void on_tableWidget_cellDoubleClicked(int row, int column);
+    void on_delPB_clicked();
 
 private:
     Ui::ModelosManager *ui;

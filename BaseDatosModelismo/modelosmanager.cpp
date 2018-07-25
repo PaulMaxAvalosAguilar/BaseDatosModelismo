@@ -95,11 +95,39 @@ void ModelosManager::updateTable()
 }
 
 
-
-void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
+void ModelosManager::on_delPB_clicked()
 {
-    QTableWidgetItem *item = ui->tableWidget->item(row,0);
-    (void)column;
+    if(ui->tableWidget->selectedItems().empty()){
+        return;
+    }else{
+        int result;
+        int row = ui->tableWidget->selectedItems().at(0)->row();
+        QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+        QTableWidgetItem *marcaitem = ui->tableWidget->item(row,0);
+        QTableWidgetItem *codigoitem = ui->tableWidget->item(row,0);
+        QTableWidgetItem *nombreitem = ui->tableWidget->item(row,0);
+        QTableWidgetItem *escalaitem = ui->tableWidget->item(row,0);
+        QTableWidgetItem *numeroUnidadesitem = ui->tableWidget->item(row,0);
+
+
+        int id = iditem->data(0).toInt();
+        QString marca = marcaitem->data(0).toString();
+        QString codigo = codigoitem->data(0).toString();
+        QString nombre = nombreitem->data(0).toString();
+        QString escala = escalaitem->data(0).toString();
+        int numeroUnidades = numeroUnidadesitem->data(0).toInt();
+
+        ModeloDialog dal(this, id, marca, codigo,nombre,
+                         escala, numeroUnidades);
+
+        dal.exec();
+
+        if(result == QDialog::Rejected){
+            return;
+        }
+
+    }
+
+
 
 }
-
