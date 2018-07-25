@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include "BaseDatos/DatabaseManager/databasemanager.h"
+#include "BaseDatos/modelo.h"
+#include <vector>
+#include <memory>
 
 namespace Ui {
 class ModelosManager;
@@ -11,6 +14,7 @@ class ModelosManager;
 class ModelosManager : public QWidget
 {
     Q_OBJECT
+
 
 public:
     explicit ModelosManager(QWidget *parent = 0);
@@ -22,6 +26,16 @@ private slots:
 private:
     Ui::ModelosManager *ui;
     DatabaseManager &man;
+    std::unique_ptr<std::vector<std::unique_ptr<Modelo>>> listaModelos;
+
+    enum Columna{
+        id,
+        Marca,
+        Codigo,
+        Nombre,
+        Escala,
+        Unidades,
+    };
 };
 
 #endif // MODELOSMANAGER_H

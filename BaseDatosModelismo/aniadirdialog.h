@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <memory>
+#include <vector>
 #include "BaseDatos/DatabaseManager/databasemanager.h"
 #include "BaseDatos/marca.h"
 #include "BaseDatos/escala.h"
