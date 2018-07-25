@@ -4,6 +4,7 @@
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
 #include <QScrollBar>
+#include <QDebug>
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -12,7 +13,7 @@ ModelosManager::ModelosManager(QWidget *parent) :
     listaModelos()
 {
     ui->setupUi(this);
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
 
     updateTable();
 
@@ -78,6 +79,21 @@ void ModelosManager::updateTable()
                                      QString::number(
                                          listaModelos->at(i)->getNumeroUnidades())));
     }
+
+
+    //ui->tableWidget->setColumnWidth(0,40);
+    //ui->tableWidget->resizeColumnsToContents();
+
+    //ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(false);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
+
+    ui->tableWidget->setColumnWidth(0, 10);
 
     verticalScroll->setValue(lastVscrollposition);
     horizontalScroll->setValue(lastHscrollposition);
