@@ -25,8 +25,8 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id,
     man(DatabaseManager::instance())
 {
 
-    ui->codigole->setText(codigo);
-    ui->nombrele->setText(nombre);
+    ui->codigole->setText(" ");
+
 
 }
 
