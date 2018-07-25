@@ -121,7 +121,7 @@ void ModelosManager::on_delPB_clicked()
 
         ModeloDialog dal(this, id, marca, codigo,nombre,
                          escala, numeroUnidades);
-
+        dal.setWindowTitle("HOlo");
         dal.exec();
 
         if(result == QDialog::Rejected){

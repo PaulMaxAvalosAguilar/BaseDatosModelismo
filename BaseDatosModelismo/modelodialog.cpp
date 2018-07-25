@@ -24,10 +24,11 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id,
     listaEscalas(),
     man(DatabaseManager::instance())
 {
-
-    ui->codigole->setText(" ");
-
-
+    ui->setupUi(this);
+    ReadDependencies();
+    ui->codigole->setText(codigo);
+    ui->nombrele->setText(nombre);
+    ui->unidadesSpinBox->setValue(numeroUnidades);
 }
 
 ModeloDialog::~ModeloDialog()
@@ -59,7 +60,6 @@ void ModeloDialog::ReadDependencies()
 
     listaMarcas = man.marcadao.getAllRecords();
     for(uint i = 0; i < listaMarcas->size(); i++){
-
         ui->marcaCB->addItem(listaMarcas->at(i)->getNombre(),
                              QVariant::fromValue(*listaMarcas->at(i)));
 
