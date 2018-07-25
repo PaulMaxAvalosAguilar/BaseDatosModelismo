@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <memory>
 #include <vector>
+#include <QString>
 #include "BaseDatos/DatabaseManager/databasemanager.h"
 #include "BaseDatos/marca.h"
 #include "BaseDatos/escala.h"
@@ -15,15 +16,20 @@ namespace Ui {
 class AniadirDialog;
 }
 
-class AniadirDialog : public QDialog
+class ModeloDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AniadirDialog(QWidget *parent = 0);
-    ~AniadirDialog();
+    explicit ModeloDialog(QWidget *parent = 0);
+    ModeloDialog(QWidget *parent, int id,
+                  QString marca, QString codigo,
+                  QString nombre, QString escala,
+                  int numeroUnidades);
+    ~ModeloDialog();
 
     Modelo modelo();
+    void ReadDependencies();
 
 private slots:
     void on_buttonBox_accepted();

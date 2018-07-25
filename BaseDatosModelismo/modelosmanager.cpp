@@ -1,6 +1,6 @@
 #include "modelosmanager.h"
 #include "ui_modelosmanager.h"
-#include "aniadirdialog.h"
+#include "modelodialog.h"
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
 #include <QScrollBar>
@@ -29,7 +29,7 @@ ModelosManager::~ModelosManager()
 void ModelosManager::on_addPB_clicked()
 {
     int result;
-    AniadirDialog dal(this);
+    ModeloDialog dal(this);
     dal.setWindowTitle("Añadir Modelo");
     result = dal.exec();
 
@@ -81,11 +81,6 @@ void ModelosManager::updateTable()
     }
 
 
-    //ui->tableWidget->setColumnWidth(0,40);
-    //ui->tableWidget->resizeColumnsToContents();
-
-    //ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
     ui->tableWidget->horizontalHeader()->setStretchLastSection(false);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -98,3 +93,13 @@ void ModelosManager::updateTable()
     verticalScroll->setValue(lastVscrollposition);
     horizontalScroll->setValue(lastHscrollposition);
 }
+
+
+
+void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+    QTableWidgetItem *item = ui->tableWidget->item(row,0);
+    (void)column;
+
+}
+

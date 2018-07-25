@@ -1,6 +1,7 @@
 #include "modelo.h"
 
-Modelo::Modelo()
+Modelo::Modelo():
+    id(0)
 {
 
 }
