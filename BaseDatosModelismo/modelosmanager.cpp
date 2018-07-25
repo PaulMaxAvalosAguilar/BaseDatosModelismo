@@ -1,10 +1,12 @@
 #include "modelosmanager.h"
 #include "ui_modelosmanager.h"
 #include "aniadirdialog.h"
+#include "BaseDatos/modelo.h"
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ModelosManager)
+    ui(new Ui::ModelosManager),
+    man(DatabaseManager::instance())
 {
     ui->setupUi(this);
 }
@@ -16,23 +18,15 @@ ModelosManager::~ModelosManager()
 
 void ModelosManager::on_addPB_clicked()
 {
+    int result;
     AniadirDialog dal(this);
-    dal.exec();
+    dal.setWindowTitle("Añadir Modelo");
+    result = dal.exec();
 
+    if(result == QDialog::Rejected){
+        return;
+    }
 
-    /*
-    Modelo modelo;
-
-        modelo.setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex())
-                         .value<Marca>().getNombre());
-
-        modelo.setCodigo(ui->codigole->text());
-        modelo.setNombre(ui->nombrele->text());
-
-        modelo.setEscala(ui->escalaCB->itemData(ui->escalaCB->currentIndex())
-                         .value<Escala>().getValor());
-
-        modelo.setNumeroUnidades(ui->unidadesSpinBox->value());
-
-        man.modelodao.addRecord(modelo);*/
+    Modelo modelo = dal.modelo();
+    man.modelodao.addRecord(modelo);
 }

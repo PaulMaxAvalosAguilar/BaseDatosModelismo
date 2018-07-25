@@ -2,6 +2,7 @@
 #define MODELOSMANAGER_H
 
 #include <QWidget>
+#include "BaseDatos/DatabaseManager/databasemanager.h"
 
 namespace Ui {
 class ModelosManager;
@@ -20,6 +21,7 @@ private slots:
 
 private:
     Ui::ModelosManager *ui;
+    DatabaseManager &man;
 };
 
 #endif // MODELOSMANAGER_H

@@ -25,6 +25,4 @@ void MarcaManager::on_marcapushButton_clicked()
     marca.setNombre(std::move(ui->marcalineEdit->text()));
 
     man.marcadao.addRecord(marca);
-
-
 }

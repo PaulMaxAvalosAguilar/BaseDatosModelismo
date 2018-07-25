@@ -1,6 +1,7 @@
 #include "aniadirdialog.h"
 #include "ui_aniadirdialog.h"
 
+
 AniadirDialog::AniadirDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AniadirDialog),
@@ -30,8 +31,29 @@ AniadirDialog::~AniadirDialog()
     delete ui;
 }
 
+Modelo AniadirDialog::modelo()
+{
+    Modelo model;
+
+
+    model.setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex())
+                   .value<Marca>().getNombre());
+
+    model.setCodigo(ui->codigole->text());
+    model.setNombre(ui->nombrele->text());
+
+    model.setEscala(ui->escalaCB->itemData(ui->escalaCB->currentIndex())
+                    .value<Escala>().getValor());
+
+    model.setNumeroUnidades(ui->unidadesSpinBox->value());
+
+    return model;
+}
+
 void AniadirDialog::on_buttonBox_accepted()
 {
+    modelo();
+
     accept();
 }
 
@@ -40,28 +62,4 @@ void AniadirDialog::on_buttonBox_rejected()
     reject();
 }
 
-int AniadirDialog::getNumeroUnidades() const
-{
-    return numeroUnidades;
-}
-
-QString AniadirDialog::getEscala() const
-{
-    return escala;
-}
-
-QString AniadirDialog::getNombre() const
-{
-    return nombre;
-}
-
-QString AniadirDialog::getCodigo() const
-{
-    return codigo;
-}
-
-QString AniadirDialog::getMarca() const
-{
-    return marca;
-}
 
