@@ -22,6 +22,7 @@ public:
 
 private slots:
     void on_addPB_clicked();
+    void updateTable();
 
 private:
     Ui::ModelosManager *ui;

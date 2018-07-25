@@ -2,7 +2,7 @@
 #include "ui_modelosmanager.h"
 #include "aniadirdialog.h"
 #include "BaseDatos/modelo.h"
-#include <QDebug>
+#include "BaseDatos/modelodao.h"
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -12,35 +12,9 @@ ModelosManager::ModelosManager(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    listaModelos = man.modelodao.getAllRecords();
+    updateTable();
 
-    for(uint i = 0; i < listaModelos->size(); i++){
-        ui->tableWidget->insertRow(ui->tableWidget->rowCount());
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                 id, new QTableWidgetItem(
-                                     QString::number(
-                                         listaModelos->at(i)->getId())));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                         Marca, new QTableWidgetItem(
-                                                 listaModelos->at(i)->getMarca()));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                         Codigo, new QTableWidgetItem(
-                                                 listaModelos->at(i)->getCodigo()));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                         Nombre, new QTableWidgetItem(
-                                                 listaModelos->at(i)->getNombre()));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                         Escala, new QTableWidgetItem(
-                                                 listaModelos->at(i)->getNombre()));
-        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                         Unidades, new QTableWidgetItem(
-                                             QString::number(
-                                                 listaModelos->at(i)->getNumeroUnidades())));
-
-
-
-    }
-
+    connect(&man.modelodao, SIGNAL(addedRecord()),this, SLOT(updateTable()));
 
 }
 
@@ -62,4 +36,34 @@ void ModelosManager::on_addPB_clicked()
 
     Modelo modelo = dal.modelo();
     man.modelodao.addRecord(modelo);
+
+}
+
+void ModelosManager::updateTable()
+{
+    listaModelos = man.modelodao.getAllRecords();
+
+    for(uint i = 0; i < listaModelos->size(); i++){
+        ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 id, new QTableWidgetItem(
+                                     QString::number(
+                                         listaModelos->at(i)->getId())));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Marca, new QTableWidgetItem(
+                                     listaModelos->at(i)->getMarca()));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Codigo, new QTableWidgetItem(
+                                     listaModelos->at(i)->getCodigo()));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Nombre, new QTableWidgetItem(
+                                     listaModelos->at(i)->getNombre()));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Escala, new QTableWidgetItem(
+                                     listaModelos->at(i)->getNombre()));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Unidades, new QTableWidgetItem(
+                                     QString::number(
+                                         listaModelos->at(i)->getNumeroUnidades())));
+    }
 }
