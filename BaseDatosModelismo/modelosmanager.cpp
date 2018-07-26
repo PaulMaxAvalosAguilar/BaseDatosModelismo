@@ -4,7 +4,6 @@
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
 #include <QScrollBar>
-#include <QDebug>
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -113,24 +112,10 @@ void ModelosManager::on_delPB_clicked()
         int result;
         int row = ui->tableWidget->selectedItems().at(0)->row();
         QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
-        QTableWidgetItem *marcaitem = ui->tableWidget->item(row,1);
-        QTableWidgetItem *codigoitem = ui->tableWidget->item(row,2);
-        QTableWidgetItem *nombreitem = ui->tableWidget->item(row,3);
-        QTableWidgetItem *escalaitem = ui->tableWidget->item(row,4);
-        QTableWidgetItem *numeroUnidadesitem = ui->tableWidget->item(row,5);
-
 
         int id = iditem->data(0).toInt();
-        QString marca = marcaitem->data(0).toString();
-        QString codigo = codigoitem->data(0).toString();
-        QString nombre = nombreitem->data(0).toString();
-        QString escala = escalaitem->data(0).toString();
-        int numeroUnidades = numeroUnidadesitem->data(0).toInt();
 
-        qDebug()<<marca;
-
-        ModeloDialog dal(this, id, marca, codigo,nombre,
-                         escala, numeroUnidades);
+        ModeloDialog dal(this, id);
         dal.setWindowTitle("HOlo");
         dal.exec();
 

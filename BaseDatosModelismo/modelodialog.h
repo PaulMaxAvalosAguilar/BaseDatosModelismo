@@ -22,10 +22,7 @@ class ModeloDialog : public QDialog
 
 public:
     explicit ModeloDialog(QWidget *parent = 0);
-    ModeloDialog(QWidget *parent, int id,
-                  QString marca, QString codigo,
-                  QString nombre, QString escala,
-                  int numeroUnidades);
+    ModeloDialog(QWidget *parent, int id);
     ~ModeloDialog();
 
     Modelo modelo();
