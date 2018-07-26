@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "modelosmanager.h"
 #include "marcasmanager.h"
+#include "escalamanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,7 @@ private:
     Ui::MainWindow *ui;
     ModelosManager *man;
     MarcasManager *marcas;
+    EscalaManager *escalas;
 };
 
 
