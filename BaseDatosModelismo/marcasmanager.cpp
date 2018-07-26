@@ -3,7 +3,8 @@
 
 MarcasManager::MarcasManager(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MarcasManager)
+    ui(new Ui::MarcasManager),
+    man(DatabaseManager::instance())
 {
     ui->setupUi(this);
 }

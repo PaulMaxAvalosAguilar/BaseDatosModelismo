@@ -2,6 +2,7 @@
 #define ESCALAMANAGER_H
 
 #include <QWidget>
+#include "BaseDatos/DatabaseManager/databasemanager.h"
 
 namespace Ui {
 class EscalaManager;
@@ -16,7 +17,15 @@ public:
     ~EscalaManager();
 
 private:
+
     Ui::EscalaManager *ui;
+    DatabaseManager &man;
+
+    enum Columna{
+        id,
+        valor,
+    };
+
 };
 
 #endif // ESCALAMANAGER_H

@@ -3,7 +3,8 @@
 
 EscalaManager::EscalaManager(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::EscalaManager)
+    ui(new Ui::EscalaManager),
+    man(DatabaseManager::instance())
 {
     ui->setupUi(this);
 }

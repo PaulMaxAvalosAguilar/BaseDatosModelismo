@@ -2,6 +2,7 @@
 #define MARCASMANAGER_H
 
 #include <QWidget>
+#include "BaseDatos/DatabaseManager/databasemanager.h"
 
 namespace Ui {
 class MarcasManager;
@@ -17,6 +18,11 @@ public:
 
 private:
     Ui::MarcasManager *ui;
+    DatabaseManager &man;
+    enum Columna{
+        id,
+        marcas,
+    };
 };
 
 #endif // MARCASMANAGER_H
