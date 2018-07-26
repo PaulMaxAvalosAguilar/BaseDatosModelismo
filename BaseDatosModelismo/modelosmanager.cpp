@@ -174,5 +174,8 @@ void ModelosManager::on_delPB_clicked()
         if(result == QDialog::Rejected){
             return;
         }
+
+        Modelo modelo = dal.modelo();
+        man.modelodao.removeRecord(modelo.getId());
     }
 }
