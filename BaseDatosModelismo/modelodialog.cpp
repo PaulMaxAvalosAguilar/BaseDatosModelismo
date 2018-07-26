@@ -17,7 +17,10 @@ ModeloDialog::ModeloDialog(QWidget *parent) :
     modeloid(0)
 {
     ui->setupUi(this);
+
+    //Fill comboboxes
     ReadDependencies();
+
 }
 
 //Update model dialog variant
@@ -150,3 +153,15 @@ void ModeloDialog::on_buttonBox_rejected()
 {
     reject();
 }
+
+const std::unique_ptr<std::vector<std::unique_ptr<Escala> > > &ModeloDialog::getListaEscalas()
+{
+    return listaEscalas;
+}
+
+const std::unique_ptr<std::vector<std::unique_ptr<Marca> > > &ModeloDialog::getListaMarcas()
+{
+    return listaMarcas;
+}
+
+

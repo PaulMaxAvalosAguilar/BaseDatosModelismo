@@ -5,6 +5,7 @@
 #include "BaseDatos/modelodao.h"
 #include <QScrollBar>
 #include <QDebug>
+#include <QMessageBox>
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -28,20 +29,16 @@ ModelosManager::~ModelosManager()
     delete ui;
 }
 
-void ModelosManager::on_addPB_clicked()
+void ModelosManager::configureTablesettings()
 {
-    int result;
-    ModeloDialog dal(this);
-    dal.setWindowTitle("Añadir Modelo");
-    result = dal.exec();
-
-    if(result == QDialog::Rejected){
-        return;
-    }
-
-    Modelo modelo = dal.modelo();
-    man.modelodao.addRecord(modelo);
-
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(false);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
+    ui->tableWidget->setColumnWidth(0, 10);
+    ui->tableWidget->hideColumn(0);
 }
 
 void ModelosManager::updateTable()
@@ -101,19 +98,29 @@ void ModelosManager::updateTable()
     //RESET SCROLLBARS POSIITONS
 }
 
-void ModelosManager::configureTablesettings()
+void ModelosManager::on_addPB_clicked()
 {
-    ui->tableWidget->horizontalHeader()->setStretchLastSection(false);
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(4, QHeaderView::Stretch);
-    ui->tableWidget->horizontalHeader()->setSectionResizeMode(5, QHeaderView::Stretch);
-    ui->tableWidget->setColumnWidth(0, 10);
-    ui->tableWidget->hideColumn(0);
+    int result;
+    ModeloDialog dal(this);
+    dal.setWindowTitle("Añadir Modelo");
+    result = dal.exec();
+
+    //Check if dialog was accepted
+    if(result == QDialog::Rejected){
+        return;
+    }
+
+    //Check if dependencies have records: Not null values
+    if(!(dal.getListaMarcas()->empty() || dal.getListaMarcas()->empty())){
+        Modelo modelo = dal.modelo();
+        man.modelodao.addRecord(modelo);
+    }else{
+        QMessageBox box;
+        box.setText("No puedes guardar un registro con marcas o escalas vacías");
+        box.exec();
+    }
+
 }
-
-
 
 void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
 {
@@ -129,8 +136,6 @@ void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
     if(result == QDialog::Rejected){
         return;
     }
-
-
 }
 
 void ModelosManager::on_updPB_clicked()

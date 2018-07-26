@@ -34,6 +34,9 @@ public:
     void setInputWidgetsData(int id);
 
 
+    const std::unique_ptr<std::vector<std::unique_ptr<Marca> > > &getListaMarcas();
+    const std::unique_ptr<std::vector<std::unique_ptr<Escala> > > &getListaEscalas();
+
 private slots:
     void on_buttonBox_accepted();
     void on_buttonBox_rejected();

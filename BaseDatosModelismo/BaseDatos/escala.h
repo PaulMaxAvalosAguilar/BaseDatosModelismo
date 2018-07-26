@@ -22,6 +22,8 @@ private:
     QString valor;
 };
 
+Q_DECLARE_METATYPE(Escala)
+
 #endif // ESCALA_H
 
-Q_DECLARE_METATYPE(Escala)
+

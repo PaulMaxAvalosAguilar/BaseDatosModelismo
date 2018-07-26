@@ -20,10 +20,14 @@ public:
     explicit ModelosManager(QWidget *parent = 0);
     ~ModelosManager();
 
-private slots:
-    void on_addPB_clicked();
-    void updateTable();
     void configureTablesettings();
+
+private slots:
+
+    void updateTable();
+
+
+    void on_addPB_clicked();
 
     void on_tableWidget_cellDoubleClicked(int row, int column);
 
