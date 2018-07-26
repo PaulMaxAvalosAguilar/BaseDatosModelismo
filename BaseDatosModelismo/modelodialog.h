@@ -23,9 +23,9 @@ class ModeloDialog : public QDialog
 public:
     //Add new Model Dialog variant
     explicit ModeloDialog(QWidget *parent = 0);
-    //Update new Model Dialog variant
+    //Update Model Dialog variant
     ModeloDialog(QWidget *parent, int id);
-    //Read only new Model Dialog variant
+    //Read only Model Dialog variant
     ModeloDialog(QWidget *parent, int id, bool visibility);
     ~ModeloDialog();
 

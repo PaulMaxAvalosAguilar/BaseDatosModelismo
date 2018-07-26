@@ -160,5 +160,19 @@ void ModelosManager::on_updPB_clicked()
 
 void ModelosManager::on_delPB_clicked()
 {
+    if(ui->tableWidget->selectedItems().empty()){
+        return;
+    }else {
+        int result;
+        int row = ui->tableWidget->selectedItems().at(0)->row();
+        QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
 
+        int id = iditem->data(0).toInt();
+        ModeloDialog dal(this, id, true);
+        dal.setWindowTitle("Eliminar Modelo");
+        result = dal.exec();
+        if(result == QDialog::Rejected){
+            return;
+        }
+    }
 }

@@ -20,7 +20,7 @@ ModeloDialog::ModeloDialog(QWidget *parent) :
     ReadDependencies();
 }
 
-//Update new model dialog variant
+//Update model dialog variant
 ModeloDialog::ModeloDialog(QWidget *parent, int id):
     QDialog(parent),
     ui(new Ui::AniadirDialog),
@@ -34,11 +34,9 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id):
     //Fill combo boxes
     ReadDependencies();
     setInputWidgetsData(id);
-
-
 }
 
-//Update new model dialog variant
+//Read only model dialog variant
 ModeloDialog::ModeloDialog(QWidget *parent, int id, bool visibility):
     QDialog(parent),
     ui(new Ui::AniadirDialog),
@@ -49,8 +47,19 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id, bool visibility):
 {
     ui->setupUi(this);
 
+    unique_ptr<Modelo> modelo =std::move(man.modelodao.getRecord(id)->at(0));
+    int numeroMarca = modelo->getMarca();
+    int numeroEscala = modelo->getEscala();
+
+    unique_ptr<Marca> marca = std::move(
+                man.marcadao.getRecord(numeroMarca)->at(0));
+    unique_ptr<Escala> escala = std::move(
+                man.escaladao.getRecord(numeroEscala)->at(0));
+
+    ui->marcaCB->addItem(marca->getNombre(), QVariant::fromValue(*marca));
+    ui->escalaCB->addItem(escala->getValor(), QVariant::fromValue(*escala));
+
     //Fill combo boxes
-    ReadDependencies();
     setInputWidgetsData(id);
     ui->buttonBox->setVisible(visibility);
 
