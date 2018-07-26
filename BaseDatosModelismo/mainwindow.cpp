@@ -7,12 +7,14 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    man(new ModelosManager)
+    man(new ModelosManager),
+    marcas(new MarcasManager)
 {
     ui->setupUi(this);
 
 
-    ui->centralWidget->layout()->addWidget(man);
+    ui->modelostab->layout()->addWidget(man);
+    ui->marcaTab->layout()->addWidget(marcas);
 
 }
 

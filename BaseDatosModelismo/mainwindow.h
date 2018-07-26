@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "modelosmanager.h"
+#include "marcasmanager.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,7 @@ public:
 private:
     Ui::MainWindow *ui;
     ModelosManager *man;
+    MarcasManager *marcas;
 };
 
 
