@@ -41,7 +41,7 @@ void ModeloDao::addRecord(Modelo& record)
 void ModeloDao::updateRecord(Modelo& record)
 {
     QSqlQuery query(mDatabase);
-    query.prepare("UPDATE Modelo set (marca,codigo,nombre,escala,numeroUnidades) = (:marca,:codigo,:nombre,:escala,:numeroUnidades) WHERE  id = (:id)");
+    query.prepare("UPDATE Modelo SET (marca,codigo,nombre,escala,numeroUnidades) = (:marca,:codigo,:nombre,:escala,:numeroUnidades) WHERE  id = (:id)");
     query.bindValue(":marca", record.getMarca());
     query.bindValue(":codigo", record.getCodigo());
     query.bindValue(":nombre", record.getNombre());

@@ -23,7 +23,7 @@ public:
 private slots:
     void on_addPB_clicked();
     void updateTable();
-
+    void configureTablesettings();
     void on_delPB_clicked();
 
 private:
