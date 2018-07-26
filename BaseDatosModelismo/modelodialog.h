@@ -38,6 +38,7 @@ private:
     std::unique_ptr<std::vector<std::unique_ptr<Marca>>> listaMarcas;
     std::unique_ptr<std::vector<std::unique_ptr<Escala>>> listaEscalas;
     DatabaseManager &man;
+    int modeloid;
 };
 
 #endif // ANIADIRDIALOG_H

@@ -4,6 +4,7 @@
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
 #include <QScrollBar>
+#include <QDebug>
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -17,6 +18,7 @@ ModelosManager::ModelosManager(QWidget *parent) :
     updateTable();
 
     connect(&man.modelodao, SIGNAL(addedRecord()),this, SLOT(updateTable()));
+    connect(&man.modelodao, SIGNAL(updatedRecord()),this, SLOT(updateTable()));
 
 }
 
@@ -109,19 +111,26 @@ void ModelosManager::on_delPB_clicked()
     if(ui->tableWidget->selectedItems().empty()){
         return;
     }else{
-        int result = 0;
+
+
+        int result;
         int row = ui->tableWidget->selectedItems().at(0)->row();
         QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
 
         int id = iditem->data(0).toInt();
 
         ModeloDialog dal(this, id);
-        dal.setWindowTitle("HOlo");
-        dal.exec();
+        dal.setWindowTitle("Actualizar Modelo");
+        result = dal.exec();
 
         if(result == QDialog::Rejected){
             return;
+
         }
+
+        Modelo modelo =  dal.modelo();
+        qDebug()<<modelo.getId();
+        man.modelodao.updateRecord(modelo);
 
     }
 }

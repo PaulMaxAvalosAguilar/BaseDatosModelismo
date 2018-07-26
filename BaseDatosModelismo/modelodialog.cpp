@@ -12,7 +12,8 @@ ModeloDialog::ModeloDialog(QWidget *parent) :
     ui(new Ui::AniadirDialog),
     listaMarcas(),
     listaEscalas(),
-    man(DatabaseManager::instance())
+    man(DatabaseManager::instance()),
+    modeloid(0)
 {
     ui->setupUi(this);
     ReadDependencies();
@@ -24,7 +25,8 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id):
     ui(new Ui::AniadirDialog),
     listaMarcas(),
     listaEscalas(),
-    man(DatabaseManager::instance())
+    man(DatabaseManager::instance()),
+    modeloid(id)
 {
     ui->setupUi(this);
 
@@ -72,6 +74,7 @@ Modelo ModeloDialog::modelo()
 {
     Modelo model;
 
+    model.setId(modeloid);
     //Get dialog values and add them to Modelo object
     model.setMarca(ui->marcaCB->itemData(ui->marcaCB->currentIndex())
                                      .value<Marca>().getId());
@@ -104,7 +107,6 @@ void ModeloDialog::ReadDependencies()
 
 void ModeloDialog::on_buttonBox_accepted()
 {
-    modelo();
     accept();
 }
 
