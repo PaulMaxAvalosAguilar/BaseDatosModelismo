@@ -109,7 +109,7 @@ void ModelosManager::on_delPB_clicked()
     if(ui->tableWidget->selectedItems().empty()){
         return;
     }else{
-        int result;
+        int result = 0;
         int row = ui->tableWidget->selectedItems().at(0)->row();
         QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
 
@@ -124,7 +124,4 @@ void ModelosManager::on_delPB_clicked()
         }
 
     }
-
-
-
 }
