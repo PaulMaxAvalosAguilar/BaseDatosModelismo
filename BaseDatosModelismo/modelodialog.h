@@ -21,16 +21,21 @@ class ModeloDialog : public QDialog
     Q_OBJECT
 
 public:
+    //Add new Model Dialog variant
     explicit ModeloDialog(QWidget *parent = 0);
+    //Update new Model Dialog variant
     ModeloDialog(QWidget *parent, int id);
+    //Read only new Model Dialog variant
+    ModeloDialog(QWidget *parent, int id, bool visibility);
     ~ModeloDialog();
 
     Modelo modelo();
     void ReadDependencies();
+    void setInputWidgetsData(int id);
+
 
 private slots:
     void on_buttonBox_accepted();
-
     void on_buttonBox_rejected();
 
 private:

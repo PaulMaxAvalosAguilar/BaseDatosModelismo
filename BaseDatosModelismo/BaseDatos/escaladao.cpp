@@ -37,7 +37,7 @@ void EscalaDao::addRecord(Escala& record)
 void EscalaDao::updateRecord(Escala& record)
 {
     QSqlQuery query(mDatabase);
-    query.prepare("UPDATE Escala (valor) = (:valor) WHERE  id = (:id)");
+    query.prepare("UPDATE Escala SET (valor) = (:valor) WHERE  id = (:id)");
     query.bindValue(":valor", record.getValor());
     query.bindValue(":id", record.getId());
     query.exec();

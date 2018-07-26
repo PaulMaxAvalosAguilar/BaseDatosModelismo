@@ -114,7 +114,26 @@ void ModelosManager::configureTablesettings()
 }
 
 
-void ModelosManager::on_delPB_clicked()
+
+void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+    int result;
+    (void) column;
+    QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+
+    int id = iditem->data(0).toInt();
+    ModeloDialog dal(this,id, false);
+    dal.setWindowTitle("Leer Modelo");
+    result = dal.exec();
+
+    if(result == QDialog::Rejected){
+        return;
+    }
+
+
+}
+
+void ModelosManager::on_updPB_clicked()
 {
     if(ui->tableWidget->selectedItems().empty()){
         return;
@@ -137,4 +156,9 @@ void ModelosManager::on_delPB_clicked()
         man.modelodao.updateRecord(modelo);
 
     }
+}
+
+void ModelosManager::on_delPB_clicked()
+{
+
 }

@@ -113,14 +113,14 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="updPB">
+      <widget class="QPushButton" name="delPB">
        <property name="text">
         <string>Eliminar</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="delPB">
+      <widget class="QPushButton" name="updPB">
        <property name="text">
         <string>Actualizar</string>
        </property>

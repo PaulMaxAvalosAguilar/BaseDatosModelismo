@@ -37,7 +37,7 @@ void MarcaDao::addRecord(Marca& record)
 void MarcaDao::updateRecord(Marca& record)
 {
     QSqlQuery query(mDatabase);
-    query.prepare("UPDATE Marca (nombre) = (:nombre) WHERE  id = (:id)");
+    query.prepare("UPDATE Marca SET (nombre) = (:nombre) WHERE  id = (:id)");
     query.bindValue(":nombre", record.getNombre());
     query.bindValue(":id", record.getId());
     query.exec();

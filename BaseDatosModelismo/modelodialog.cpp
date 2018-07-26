@@ -1,5 +1,5 @@
 #include "modelodialog.h"
-#include "ui_aniadirdialog.h"
+#include "ui_modelodialog.h"
 #include "QDebug"
 #include <memory>
 #include <vector>
@@ -7,6 +7,7 @@
 
 using namespace std;
 
+//Add new model dialog variant
 ModeloDialog::ModeloDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AniadirDialog),
@@ -17,9 +18,9 @@ ModeloDialog::ModeloDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     ReadDependencies();
-
 }
 
+//Update new model dialog variant
 ModeloDialog::ModeloDialog(QWidget *parent, int id):
     QDialog(parent),
     ui(new Ui::AniadirDialog),
@@ -32,37 +33,27 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id):
 
     //Fill combo boxes
     ReadDependencies();
-
-    //Get current object foreign keys
-    unique_ptr<Modelo> modeloptr=
-            std::move(man.modelodao.getRecord(id)->at(0));
-    int numeroMarca = modeloptr->getMarca();
-    int numeroEscala = modeloptr->getEscala();
-
-    //Get foreign keys objects
-    unique_ptr<Marca> marcaptr =
-            std::move(man.marcadao.getRecord(numeroMarca)->at(0));
-    unique_ptr<Escala> escalaptr =
-            std::move(man.escaladao.getRecord(numeroEscala)->at(0));
-
-    //Get combo box position of foreign keys
-    int marcaIndex = ui->marcaCB->findData(QVariant::fromValue(*marcaptr));
-    int escalaIndex = ui->escalaCB->findData(QVariant::fromValue(*escalaptr));
+    setInputWidgetsData(id);
 
 
-    //Set all dialog values
-    if(marcaIndex != -1){
-        ui->marcaCB->setCurrentIndex(marcaIndex);
-    }
+}
 
-    if(escalaIndex != -1){
-        ui->escalaCB->setCurrentIndex(escalaIndex);
-    }
+//Update new model dialog variant
+ModeloDialog::ModeloDialog(QWidget *parent, int id, bool visibility):
+    QDialog(parent),
+    ui(new Ui::AniadirDialog),
+    listaMarcas(),
+    listaEscalas(),
+    man(DatabaseManager::instance()),
+    modeloid(id)
+{
+    ui->setupUi(this);
 
-    ui->codigole->setText(modeloptr->getCodigo());
-    ui->nombrele->setText(modeloptr->getNombre());
-    ui->unidadesSpinBox->setValue(modeloptr->getNumeroUnidades());
-    //set all dialog values
+    //Fill combo boxes
+    ReadDependencies();
+    setInputWidgetsData(id);
+    ui->buttonBox->setVisible(visibility);
+
 }
 
 ModeloDialog::~ModeloDialog()
@@ -102,7 +93,43 @@ void ModeloDialog::ReadDependencies()
         ui->escalaCB->addItem(listaEscalas->at(i)->getValor(),
                               QVariant::fromValue(*listaEscalas->at(i)));
     }
+
     //Fill marcas and escalas combo boxes
+}
+
+void ModeloDialog::setInputWidgetsData(int id)
+{
+    //Search for object in database
+    unique_ptr<Modelo> modeloptr=
+            std::move(man.modelodao.getRecord(id)->at(0));
+    //Get current object foreign keys values
+    int numeroMarca = modeloptr->getMarca();
+    int numeroEscala = modeloptr->getEscala();
+
+    //Get foreign keys objects
+    unique_ptr<Marca> marcaptr =
+            std::move(man.marcadao.getRecord(numeroMarca)->at(0));
+    unique_ptr<Escala> escalaptr =
+            std::move(man.escaladao.getRecord(numeroEscala)->at(0));
+
+    //Get combo box position of foreign keys
+    int marcaIndex = ui->marcaCB->findData(QVariant::fromValue(*marcaptr));
+    int escalaIndex = ui->escalaCB->findData(QVariant::fromValue(*escalaptr));
+
+
+    //Set all dialog values
+    if(marcaIndex != -1){
+        ui->marcaCB->setCurrentIndex(marcaIndex);
+    }
+
+    if(escalaIndex != -1){
+        ui->escalaCB->setCurrentIndex(escalaIndex);
+    }
+
+    ui->codigole->setText(modeloptr->getCodigo());
+    ui->nombrele->setText(modeloptr->getNombre());
+    ui->unidadesSpinBox->setValue(modeloptr->getNumeroUnidades());
+    //set all dialog values
 }
 
 void ModeloDialog::on_buttonBox_accepted()
@@ -114,5 +141,3 @@ void ModeloDialog::on_buttonBox_rejected()
 {
     reject();
 }
-
-
