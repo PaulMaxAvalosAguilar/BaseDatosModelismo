@@ -2,8 +2,6 @@
 #include <QApplication>
 #include "BaseDatos/marca.h"
 #include "BaseDatos/escala.h"
-#include <QDesktopWidget>
-#include <QStyle>
 #include <QScreen>
 #include <QGuiApplication>
 

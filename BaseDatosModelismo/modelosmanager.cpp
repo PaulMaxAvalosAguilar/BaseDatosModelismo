@@ -15,9 +15,13 @@ ModelosManager::ModelosManager(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //Set table format
     configureTablesettings();
+
+    //Read all registers into table
     updateTable();
 
+    //Check needed updates of table
     connect(&man.modelodao, SIGNAL(addedRecord()),this, SLOT(updateTable()));
     connect(&man.modelodao, SIGNAL(updatedRecord()),this, SLOT(updateTable()));
     connect(&man.modelodao, SIGNAL(removedRecord()),this, SLOT(updateTable()));
@@ -101,6 +105,8 @@ void ModelosManager::updateTable()
 void ModelosManager::on_addPB_clicked()
 {
     int result;
+
+    //Launch dialog
     ModeloDialog dal(this);
     dal.setWindowTitle("Añadir Modelo");
     result = dal.exec();
@@ -111,8 +117,22 @@ void ModelosManager::on_addPB_clicked()
     }
 
     //Check if dependencies have records: Not null values
-    if(!(dal.getListaMarcas()->empty() || dal.getListaMarcas()->empty())){
+    //Not null Marca, codigo, nombre, escala
+
+    //Checking not null marcas or escalas
+    if(!(dal.getListaMarcas()->empty() || dal.getListaEscalas()->empty())){
+
+        //Persist modelo dao
         Modelo modelo = dal.modelo();
+
+        if(modelo.getCodigo().isEmpty() || modelo.getNombre().isEmpty()){
+            //Checking not null nombre o escalas
+            QMessageBox box;
+            box.setText("Tienes que escribir un código y un nombre válidos");
+            box.exec();
+            return;
+        }
+
         man.modelodao.addRecord(modelo);
     }else{
         QMessageBox box;
@@ -125,38 +145,48 @@ void ModelosManager::on_addPB_clicked()
 void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
 {
     int result;
-    (void) column;
-    QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+    (void) column;//Used value for suprressing warnings
 
+    //Get id of object for being searched and filled into dialog
+    QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
     int id = iditem->data(0).toInt();
+
+    //Launch dialog with filled values of id / hide buttons
     ModeloDialog dal(this,id, false);
     dal.setWindowTitle("Leer Modelo");
     result = dal.exec();
 
+    //Check if dialog was accepted
     if(result == QDialog::Rejected){
-        return;
+        return;//Dialog should be rejected in all cases
     }
 }
 
 void ModelosManager::on_updPB_clicked()
 {
+    //Check if there is something selected
     if(ui->tableWidget->selectedItems().empty()){
         return;
     }else{
 
-
         int result;
+
+        //Get id of object for being searched and filled into dialog
         int row = ui->tableWidget->selectedItems().at(0)->row();
         QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
-
         int id = iditem->data(0).toInt();
 
+        //Launch dialog with filled values of id
         ModeloDialog dal(this, id);
         dal.setWindowTitle("Actualizar Modelo");
         result = dal.exec();
+
+        //Check if dialog was accepted
         if(result == QDialog::Rejected){
             return;
         }
+
+        //Update object
         Modelo modelo =  dal.modelo();
         man.modelodao.updateRecord(modelo);
 
@@ -165,21 +195,29 @@ void ModelosManager::on_updPB_clicked()
 
 void ModelosManager::on_delPB_clicked()
 {
+    //Check if there is something selected
     if(ui->tableWidget->selectedItems().empty()){
         return;
     }else {
+
         int result;
+
+        //Get id of object for being searched and filled into dialog
         int row = ui->tableWidget->selectedItems().at(0)->row();
         QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
-
         int id = iditem->data(0).toInt();
+
+        //Launch dialog with filled values of id
         ModeloDialog dal(this, id, true);
         dal.setWindowTitle("Eliminar Modelo");
         result = dal.exec();
+
+        //Check if dialog was accepted
         if(result == QDialog::Rejected){
             return;
         }
 
+        //Remove object
         Modelo modelo = dal.modelo();
         man.modelodao.removeRecord(modelo.getId());
     }
