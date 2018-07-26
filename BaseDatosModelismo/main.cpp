@@ -3,6 +3,7 @@
 #include "marcamanager.h"
 #include <QApplication>
 #include "BaseDatos/marca.h"
+#include "BaseDatos/escala.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
 
     qRegisterMetaType<Marca>();
     QMetaType::registerComparators<Marca>();
+    qRegisterMetaType<Escala>();
+    QMetaType::registerComparators<Escala>();
 
     MainWindow w;
     w.show();

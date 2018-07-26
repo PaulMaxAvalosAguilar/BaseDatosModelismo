@@ -35,36 +35,25 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id):
     int numeroMarca = modeloptr->getMarca();
     int numeroEscala = modeloptr->getEscala();
 
+
     unique_ptr<Marca> marcaptr =
             std::move(man.marcadao.getRecord(numeroMarca)->at(0));
 
     unique_ptr<Escala> escalaptr =
             std::move(man.escaladao.getRecord(numeroEscala)->at(0));
 
+    int marcaIndex = ui->marcaCB->findData(QVariant::fromValue(*marcaptr));
+    int escalaIndex = ui->escalaCB->findData(QVariant::fromValue(*escalaptr));
 
 
-    QVariant variant = QVariant::fromValue(*marcaptr);
-
-
-    int marcaIndex = ui->marcaCB->findData(variant);
-    int escalaIndex = ui->marcaCB->findData(QVariant::fromValue(*escalaptr));
-
-    qDebug()<<marcaptr->getId();
-    qDebug()<< variant.value<Marca>().getId();
-    qDebug()<<marcaptr->getNombre();
-    qDebug()<< variant.value<Marca>().getNombre();
-    qDebug()<<marcaIndex;
-
+    //Set values
     if(marcaIndex != -1){
-
         ui->marcaCB->setCurrentIndex(marcaIndex);
-
     }
 
     if(escalaIndex != -1){
         ui->escalaCB->setCurrentIndex(escalaIndex);
     }
-
 
     ui->codigole->setText(modeloptr->getCodigo());
     ui->nombrele->setText(modeloptr->getNombre());
