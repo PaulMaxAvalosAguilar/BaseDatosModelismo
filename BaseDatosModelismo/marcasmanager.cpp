@@ -1,6 +1,8 @@
 #include "marcasmanager.h"
 #include "ui_marcasmanager.h"
+#include "Dialogs/marcadialog.h"
 #include <QScrollBar>
+#include <QDialog>
 
 MarcasManager::MarcasManager(QWidget *parent) :
     QWidget(parent),
@@ -75,7 +77,17 @@ void MarcasManager::updateTable()
 
 void MarcasManager::on_addButton_clicked()
 {
+    int result;
 
+    //Launch dialog
+    MarcaDialog dal(this);
+    dal.setWindowTitle("Añadir Marca");
+    result = dal.exec();
+
+    //Check if dialog was accepted
+    if(result == QDialog::Rejected){
+        return;
+    }
 }
 
 void MarcasManager::on_updateButton_clicked()
