@@ -191,9 +191,30 @@ void ModelosManager::on_updPB_clicked()
             return;
         }
 
-        //Update object
-        Modelo modelo =  dal.modelo();
-        man.modelodao.updateRecord(modelo);
+
+        //Check if dependencies have records: Not null values
+        //Not null Marca, codigo, nombre, escala
+
+        //Checking not null marcas or escalas
+        if(!(dal.getListaMarcas()->empty() || dal.getListaEscalas()->empty())){
+
+            //Persist modelo dao
+            Modelo modelo = dal.modelo();
+
+            if(modelo.getCodigo().isEmpty() || modelo.getNombre().isEmpty()){
+                //Checking not null nombre o escalas
+                QMessageBox box;
+                box.setText("Tienes que escribir un código y un nombre válidos");
+                box.exec();
+                return;
+            }
+
+            man.modelodao.updateRecord(modelo);
+        }else{
+            QMessageBox box;
+            box.setText("No puedes guardar un registro con marcas o escalas vacías");
+            box.exec();
+        }
 
     }
 }
