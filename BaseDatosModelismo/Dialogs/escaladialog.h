@@ -16,6 +16,7 @@ class EscalaDialog : public QDialog
 public:
     explicit EscalaDialog(QWidget *parent = 0);
     EscalaDialog(QWidget *parent, int id);
+    EscalaDialog(QWidget *parent, int id, bool visibility);
     ~EscalaDialog();
 
     Escala escala();

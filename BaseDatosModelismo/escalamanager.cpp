@@ -79,7 +79,7 @@ void EscalaManager::on_addButton_clicked()
 
     //Launch dialog
     EscalaDialog dal(this);
-    dal.setWindowTitle("Añadir Marca");
+    dal.setWindowTitle("Añadir Escala");
     result = dal.exec();
 
     //Check if dialog was accepted
@@ -137,7 +137,32 @@ void EscalaManager::on_updateButton_clicked()
 
 void EscalaManager::on_deleteButton_clicked()
 {
+    //Check if there is something selected
+    if(ui->tableWidget->selectedItems().empty()){
+        return;
+    }else {
 
+        int result;
+
+        //Get id of object for being searched and filled into dialog
+        int row = ui->tableWidget->selectedItems().at(0)->row();
+        QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+        int id = iditem->data(0).toInt();
+
+        //Launch dialog with filled values of id
+        EscalaDialog dal(this, id, true);
+        dal.setWindowTitle("Eliminar Escala");
+        result = dal.exec();
+
+        //Check if dialog was accepted
+        if(result == QDialog::Rejected){
+            return;
+        }
+
+        //Remove object
+        Escala escala = dal.escala();
+        man.escaladao.removeRecord(escala.getId());
+    }
 }
 
 void EscalaManager::on_tableWidget_cellDoubleClicked(int row, int column)

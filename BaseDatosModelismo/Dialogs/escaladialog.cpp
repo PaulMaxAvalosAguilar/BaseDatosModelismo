@@ -23,6 +23,22 @@ EscalaDialog::EscalaDialog(QWidget *parent, int id):
     setInputWidgetsData(id);
 }
 
+EscalaDialog::EscalaDialog(QWidget *parent, int id, bool visibility):
+    QDialog(parent),
+    ui(new Ui::EscalaDialog),
+    man(DatabaseManager::instance()),
+    escalaid(id)
+{
+    ui->setupUi(this);
+
+    std::unique_ptr<Escala> escala = std::move(man.escaladao.getRecord(id)->at(0));
+
+    ui->valorle->setText(escala->getValor());
+
+    ui->buttonBox->setVisible(visibility);
+
+}
+
 EscalaDialog::~EscalaDialog()
 {
     delete ui;
