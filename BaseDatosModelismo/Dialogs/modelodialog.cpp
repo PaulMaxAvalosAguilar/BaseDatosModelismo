@@ -116,18 +116,19 @@ void ModeloDialog::setInputWidgetsData(int id)
     unique_ptr<Modelo> modeloptr=
             std::move(man.modelodao.getRecord(id)->at(0));
 
+    //Create list of dependencies for testing emptiness
+    unique_ptr<vector<unique_ptr<Marca>>> marca;
+    unique_ptr<vector<unique_ptr<Escala>>> escala;
+
+
     //Get current object foreign keys values
     int numeromarcaBuscada = modeloptr->getMarca();
     int numeroescalaBuscada = modeloptr->getEscala();
 
-    //Create a list of dependencies for testing emptiness
-    unique_ptr<vector<unique_ptr<Marca>>> marca;
-    unique_ptr<vector<unique_ptr<Escala>>> escala;
 
     //Search whether dependencies exist or not
     marca = std::move(man.marcadao.getRecord(numeromarcaBuscada));
     escala = std::move(man.escaladao.getRecord(numeroescalaBuscada));
-
 
 
     unique_ptr<Marca> marcaptr = (marca->empty())? nullptr
@@ -136,12 +137,13 @@ void ModeloDialog::setInputWidgetsData(int id)
                                                    :std::move(escala->at(0));
     //Search wheter dependencies exist or not
 
-    //Get combo box position of foreign keys
+
+    //Get combo box position for foreign keys
     int marcaIndex = ui->marcaCB->findData(QVariant::fromValue(*marcaptr));
     int escalaIndex = ui->escalaCB->findData(QVariant::fromValue(*escalaptr));
 
 
-    //Set all dialog values
+    //Position combobox in foreign keys
     if(marcaIndex != -1){
         ui->marcaCB->setCurrentIndex(marcaIndex);
     }
@@ -149,11 +151,13 @@ void ModeloDialog::setInputWidgetsData(int id)
     if(escalaIndex != -1){
         ui->escalaCB->setCurrentIndex(escalaIndex);
     }
+    //Position combo box position for foreign keys
 
+    //Set the rest of dialog values
     ui->codigole->setText(modeloptr->getCodigo());
     ui->nombrele->setText(modeloptr->getNombre());
     ui->unidadesSpinBox->setValue(modeloptr->getNumeroUnidades());
-    //set all dialog values
+    //Set the rest of dialog values
 }
 
 void ModeloDialog::on_buttonBox_accepted()

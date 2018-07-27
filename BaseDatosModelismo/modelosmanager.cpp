@@ -73,7 +73,7 @@ void ModelosManager::updateTable()
     for(uint i = 0; i < listaModelos->size(); i++){
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
 
-        //Save current object dependencies numbers
+        //Get current object foreign keys values
         int numeromarcaBuscada = listaModelos->at(i)->getMarca();
         int numeroescalaBuscada = listaModelos->at(i)->getEscala();
 
@@ -82,21 +82,11 @@ void ModelosManager::updateTable()
         escala = std::move(man.escaladao.getRecord(numeroescalaBuscada));
 
 
-        if(marca->empty()){
-            numeromarcaBuscada = -1;
-        }
-
-        if(escala->empty()){
-            numeroescalaBuscada = -1;
-        }
-        //Search whether dependencies exist or not
-
-
         //Fill dependencies properly
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Marcac, new QTableWidgetItem(
 
-                                     (numeromarcaBuscada == -1)?
+                                     (marca->empty())?
                                          0
                                        :marca->at(0)->getNombre()
 
@@ -104,13 +94,16 @@ void ModelosManager::updateTable()
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Escalac, new QTableWidgetItem(
 
-                                     (numeroescalaBuscada == -1)?
+                                     (marca->empty())?
                                          0
                                        :escala->at(0)->getValor()
 
                                          ));
-        //Fill dependencies properly
 
+        //Search whether dependencies exist or not
+
+
+        //Fill dependencies properly
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  id, new QTableWidgetItem(
                                      QString::number(
