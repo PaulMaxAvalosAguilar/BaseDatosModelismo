@@ -1,6 +1,6 @@
 #include "modelosmanager.h"
 #include "ui_modelosmanager.h"
-#include "modelodialog.h"
+#include "Dialogs/modelodialog.h"
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
 #include <QScrollBar>

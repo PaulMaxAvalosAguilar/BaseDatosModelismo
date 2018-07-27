@@ -34,9 +34,11 @@ SOURCES += \
     BaseDatos/escala.cpp \
     BaseDatos/escaladao.cpp \
     modelosmanager.cpp \
-    modelodialog.cpp \
+    Dialogs/modelodialog.cpp \
     marcasmanager.cpp \
-    escalamanager.cpp
+    escalamanager.cpp \
+    Dialogs/marcadialog.cpp \
+    Dialogs/escaladialog.cpp
 
 
 HEADERS += \
@@ -49,15 +51,19 @@ HEADERS += \
     BaseDatos/escala.h \
     BaseDatos/escaladao.h \
     modelosmanager.h \
-    modelodialog.h \
+    Dialogs/modelodialog.h \
     marcasmanager.h \
-    escalamanager.h
+    escalamanager.h \
+    Dialogs/marcadialog.h \
+    Dialogs/escaladialog.h
 
 
 FORMS += \
         mainwindow.ui \
     modelosmanager.ui \
-    modelodialog.ui \
+    Dialogs/modelodialog.ui \
     marcasmanager.ui \
-    escalamanager.ui
+    escalamanager.ui \
+    Dialogs/marcadialog.ui \
+    Dialogs/escaladialog.ui
 
