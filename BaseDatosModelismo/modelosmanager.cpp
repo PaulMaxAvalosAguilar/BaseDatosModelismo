@@ -3,9 +3,14 @@
 #include "Dialogs/modelodialog.h"
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
+#include "BaseDatos/marca.h"
+#include "BaseDatos/escala.h"
 #include <QScrollBar>
-#include <QDebug>
+#include <memory>
 #include <QMessageBox>
+#include <QDebug>
+
+
 
 ModelosManager::ModelosManager(QWidget *parent) :
     QWidget(parent),
@@ -61,21 +66,46 @@ void ModelosManager::updateTable()
     //Erase table contents
     ui->tableWidget->setRowCount(0);
 
+    //Create list of dependencies for testing emptiness
+    std::unique_ptr<std::vector<std::unique_ptr<Marca>>> marca;
+    std::unique_ptr<std::vector<std::unique_ptr<Escala>>> escala;
+
+
     //Set table contents
     for(uint i = 0; i < listaModelos->size(); i++){
         ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+
+        //Save dependencies numbers
+        int numeromarcaBuscada = listaModelos->at(i)->getMarca();
+        int numeroescalaBuscada = listaModelos->at(i)->getEscala();
+
+        marca  = std::move(man.marcadao.getRecord(numeromarcaBuscada));
+        escala = std::move(man.escaladao.getRecord(numeroescalaBuscada));
+
+        if(marca->empty()){
+            numeromarcaBuscada = -1;
+            qDebug()<<"Marca doesn't exist";
+        }
+
+        if(escala->empty()){
+            numeroescalaBuscada = -1;
+        }
+
+
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  id, new QTableWidgetItem(
                                      QString::number(
                                          listaModelos->at(i)->getId())));
         //look into foreign key desired value
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                 Marca, new QTableWidgetItem(
+                                 Marcac, new QTableWidgetItem(
 
-                                     man.marcadao.getRecord(listaModelos->at(i)->getMarca())
-                                     ->at(0)->getNombre()
+                                     (numeromarcaBuscada == -1)?
+                                        0
+                                       :man.marcadao.getRecord(numeromarcaBuscada)->at(0)->getNombre()
 
-                                     ));
+
+                                         ));
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Codigo, new QTableWidgetItem(
                                      listaModelos->at(i)->getCodigo()));
@@ -84,10 +114,11 @@ void ModelosManager::updateTable()
                                      listaModelos->at(i)->getNombre()));
         //look into foreign key desired value
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
-                                 Escala, new QTableWidgetItem(
+                                 Escalac, new QTableWidgetItem(
 
-                                     man.escaladao.getRecord(listaModelos->at(i)->getEscala())
-                                     ->at(0)->getValor()
+                                     (numeroescalaBuscada == -1)?
+                                         0
+                                       :man.escaladao.getRecord(numeroescalaBuscada)->at(0)->getValor()
 
                                      ));
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,

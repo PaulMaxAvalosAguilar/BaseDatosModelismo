@@ -42,14 +42,15 @@ private:
     DatabaseManager &man;
     std::unique_ptr<std::vector<std::unique_ptr<Modelo>>> listaModelos;
 
+
     enum Columna{
-        id,
-        Marca,
-        Codigo,
-        Nombre,
-        Escala,
-        Unidades,
-    };
+            id,
+            Marcac,
+            Codigo,
+            Nombre,
+            Escalac,
+            Unidades,
+        };
 };
 
 #endif // MODELOSMANAGER_H
