@@ -58,7 +58,7 @@ void ModelosManager::updateTable()
     int lastHscrollposition = horizontalScroll->value();
     //GET CURRENT SCROLLBARS POSITIONS
 
-    //Read database
+    //Read database/ Objects source charged in RAM
     listaModelos = man.modelodao.getAllRecords();
 
     //Erase table contents
@@ -77,7 +77,7 @@ void ModelosManager::updateTable()
         int numeromarcaBuscada = listaModelos->at(i)->getMarca();
         int numeroescalaBuscada = listaModelos->at(i)->getEscala();
 
-        //Search for dependencies if exist
+        //Search whether dependencies exist or not
         marca  = std::move(man.marcadao.getRecord(numeromarcaBuscada));
         escala = std::move(man.escaladao.getRecord(numeroescalaBuscada));
 
@@ -89,7 +89,7 @@ void ModelosManager::updateTable()
         if(escala->empty()){
             numeroescalaBuscada = -1;
         }
-        //Search for dependencies if exist
+        //Search whether dependencies exist or not
 
 
         //Fill dependencies properly

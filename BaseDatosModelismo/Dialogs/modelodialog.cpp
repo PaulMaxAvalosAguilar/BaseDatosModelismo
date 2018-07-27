@@ -112,18 +112,29 @@ void ModeloDialog::ReadDependencies()
 
 void ModeloDialog::setInputWidgetsData(int id)
 {
-    //Search for object in database
+    //Read database / Object source charged in RAM
     unique_ptr<Modelo> modeloptr=
             std::move(man.modelodao.getRecord(id)->at(0));
-    //Get current object foreign keys values
-    int numeroMarca = modeloptr->getMarca();
-    int numeroEscala = modeloptr->getEscala();
 
-    //Get foreign keys objects
-    unique_ptr<Marca> marcaptr =
-            std::move(man.marcadao.getRecord(numeroMarca)->at(0));
-    unique_ptr<Escala> escalaptr =
-            std::move(man.escaladao.getRecord(numeroEscala)->at(0));
+    //Get current object foreign keys values
+    int numeromarcaBuscada = modeloptr->getMarca();
+    int numeroescalaBuscada = modeloptr->getEscala();
+
+    //Create a list of dependencies for testing emptiness
+    unique_ptr<vector<unique_ptr<Marca>>> marca;
+    unique_ptr<vector<unique_ptr<Escala>>> escala;
+
+    //Search whether dependencies exist or not
+    marca = std::move(man.marcadao.getRecord(numeromarcaBuscada));
+    escala = std::move(man.escaladao.getRecord(numeroescalaBuscada));
+
+
+
+    unique_ptr<Marca> marcaptr = (marca->empty())? nullptr
+                                                 : std::move(marca->at(0)) ;
+    unique_ptr<Escala> escalaptr = (marca->empty())? nullptr
+                                                   :std::move(escala->at(0));
+    //Search wheter dependencies exist or not
 
     //Get combo box position of foreign keys
     int marcaIndex = ui->marcaCB->findData(QVariant::fromValue(*marcaptr));
