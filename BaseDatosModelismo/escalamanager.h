@@ -22,6 +22,14 @@ public:
 private slots:
     void updateTable();
 
+    void on_addButton_clicked();
+
+    void on_updateButton_clicked();
+
+    void on_deleteButton_clicked();
+
+    void on_tableWidget_cellDoubleClicked(int row, int column);
+
 private:
 
     Ui::EscalaManager *ui;

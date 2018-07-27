@@ -70,3 +70,23 @@ void EscalaManager::updateTable()
     horizontalScroll->setValue(lastHscrollposition);
     //RESET SCROLLBARS POSIITONS
 }
+
+void EscalaManager::on_addButton_clicked()
+{
+
+}
+
+void EscalaManager::on_updateButton_clicked()
+{
+
+}
+
+void EscalaManager::on_deleteButton_clicked()
+{
+
+}
+
+void EscalaManager::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+
+}

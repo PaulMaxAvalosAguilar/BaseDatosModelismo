@@ -72,3 +72,23 @@ void MarcasManager::updateTable()
 
 
 }
+
+void MarcasManager::on_addButton_clicked()
+{
+
+}
+
+void MarcasManager::on_updateButton_clicked()
+{
+
+}
+
+void MarcasManager::on_deleteButton_clicked()
+{
+
+}
+
+void MarcasManager::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+
+}

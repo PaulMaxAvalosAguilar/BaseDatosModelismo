@@ -142,25 +142,6 @@ void ModelosManager::on_addPB_clicked()
 
 }
 
-void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
-{
-    int result;
-    (void) column;//Used value for suprressing warnings
-
-    //Get id of object for being searched and filled into dialog
-    QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
-    int id = iditem->data(0).toInt();
-
-    //Launch dialog with filled values of id / hide buttons
-    ModeloDialog dal(this,id, false);
-    dal.setWindowTitle("Leer Modelo");
-    result = dal.exec();
-
-    //Check if dialog was accepted
-    if(result == QDialog::Rejected){
-        return;//Dialog should be rejected in all cases
-    }
-}
 
 void ModelosManager::on_updPB_clicked()
 {
@@ -220,5 +201,26 @@ void ModelosManager::on_delPB_clicked()
         //Remove object
         Modelo modelo = dal.modelo();
         man.modelodao.removeRecord(modelo.getId());
+    }
+}
+
+
+void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+    int result;
+    (void) column;//Used value for suprressing warnings
+
+    //Get id of object for being searched and filled into dialog
+    QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+    int id = iditem->data(0).toInt();
+
+    //Launch dialog with filled values of id / hide buttons
+    ModeloDialog dal(this,id, false);
+    dal.setWindowTitle("Leer Modelo");
+    result = dal.exec();
+
+    //Check if dialog was accepted
+    if(result == QDialog::Rejected){
+        return;//Dialog should be rejected in all cases
     }
 }
