@@ -68,11 +68,13 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id, bool visibility):
 
 
     if(!(marca->empty())){
-    unique_ptr<Marca> marcaptr = std::move(marca->at(0));
-    unique_ptr<Escala> escalaptr = std::move(escala->at(0));
+        unique_ptr<Marca> marcaptr = std::move(marca->at(0));
+        ui->marcaCB->addItem(marcaptr->getNombre(), QVariant::fromValue(*marcaptr));
+    }
 
-    ui->marcaCB->addItem(marcaptr->getNombre(), QVariant::fromValue(*marcaptr));
-    ui->escalaCB->addItem(escalaptr->getValor(), QVariant::fromValue(*escalaptr));
+    if(!(marca->empty())){
+        unique_ptr<Escala> escalaptr = std::move(escala->at(0));
+        ui->escalaCB->addItem(escalaptr->getValor(), QVariant::fromValue(*escalaptr));
     }
 
     //Fill combo boxes
