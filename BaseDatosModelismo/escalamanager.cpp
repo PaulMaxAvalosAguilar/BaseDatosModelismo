@@ -143,7 +143,7 @@ void EscalaManager::on_updateButton_clicked()
             return;
         }
 
-        man.escaladao.addRecord(escala);
+        man.escaladao.updateRecord(escala);
     }
 }
 
