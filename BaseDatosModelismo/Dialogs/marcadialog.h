@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <BaseDatos/marca.h>
+#include <BaseDatos/DatabaseManager/databasemanager.h>
 
 namespace Ui {
 class MarcaDialog;
@@ -14,9 +15,12 @@ class MarcaDialog : public QDialog
 
 public:
     explicit MarcaDialog(QWidget *parent = 0);
+    MarcaDialog(QWidget *parent, int id);
+    MarcaDialog(QWidget *parent, int id, bool visibility);
     ~MarcaDialog();
 
     Marca marca();
+    void setInputWidgetsData(int id);
 
 private slots:
     void on_buttonBox_accepted();
@@ -25,8 +29,7 @@ private slots:
 
 private:
     Ui::MarcaDialog *ui;
-
-
+    DatabaseManager &man;
     int marcaid;
 };
 

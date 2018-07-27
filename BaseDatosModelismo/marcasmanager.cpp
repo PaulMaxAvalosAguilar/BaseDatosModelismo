@@ -109,12 +109,61 @@ void MarcasManager::on_addButton_clicked()
 
 void MarcasManager::on_updateButton_clicked()
 {
+    //Check if there is something selected
+    if(ui->tableWidget->selectedItems().empty()){
+        return;
+    }else{
 
+        int result;
+
+        //Get id of object for being searched and filled into dialog
+        int row = ui->tableWidget->selectedItems().at(0)->row();
+        QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+        int id = iditem->data(0).toInt();
+
+        //Launch dialog with filled values of id
+        MarcaDialog dal(this,id);
+        dal.setWindowTitle("Actualizar marca");
+        result = dal.exec();
+
+        if(result == QDialog::Rejected){
+            return;
+        }
+
+        Marca marca = dal.marca();
+        man.marcadao.updateRecord(marca);
+
+    }
 }
 
 void MarcasManager::on_deleteButton_clicked()
 {
+    //Check if there is something selected
+    if(ui->tableWidget->selectedItems().empty()){
+        return;
+    }else {
 
+        int result;
+
+        //Get id of object for being searched and filled into dialog
+        int row = ui->tableWidget->selectedItems().at(0)->row();
+        QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+        int id = iditem->data(0).toInt();
+
+        //Launch dialog with filled values of id
+        MarcaDialog dal(this, id, true);
+        dal.setWindowTitle("Eliminar Marca");
+        result = dal.exec();
+
+        //Check if dialog was accepted
+        if(result == QDialog::Rejected){
+            return;
+        }
+
+        //Remove object
+        Marca marca = dal.marca();
+        man.marcadao.removeRecord(marca.getId());
+    }
 }
 
 void MarcasManager::on_tableWidget_cellDoubleClicked(int row, int column)

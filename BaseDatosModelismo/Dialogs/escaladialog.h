@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "BaseDatos/escala.h"
+#include "BaseDatos/DatabaseManager/databasemanager.h"
 
 namespace Ui {
 class EscalaDialog;
@@ -14,8 +15,11 @@ class EscalaDialog : public QDialog
 
 public:
     explicit EscalaDialog(QWidget *parent = 0);
+    EscalaDialog(QWidget *parent, int id);
     ~EscalaDialog();
+
     Escala escala();
+    void setInputWidgetsData(int id);
 
 private slots:
     void on_buttonBox_accepted();
@@ -24,7 +28,7 @@ private slots:
 
 private:
     Ui::EscalaDialog *ui;
-
+    DatabaseManager &man;
     int escalaid;
 };
 

@@ -1,12 +1,26 @@
 #include "escaladialog.h"
 #include "ui_escaladialog.h"
+#include <memory>
 
 EscalaDialog::EscalaDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::EscalaDialog),
+    man(DatabaseManager::instance()),
     escalaid(0)
 {
     ui->setupUi(this);
+}
+
+EscalaDialog::EscalaDialog(QWidget *parent, int id):
+    QDialog(parent),
+    ui(new Ui::EscalaDialog),
+    man(DatabaseManager::instance()),
+    escalaid(id)
+{
+    ui->setupUi(this);
+
+    //Fill data with searched value
+    setInputWidgetsData(id);
 }
 
 EscalaDialog::~EscalaDialog()
@@ -23,6 +37,14 @@ Escala EscalaDialog::escala()
     escala.setValor(ui->valorle->text());
 
     return escala;
+}
+
+void EscalaDialog::setInputWidgetsData(int id)
+{
+    std::unique_ptr<Escala> escala =  std::move(man.escaladao.getRecord(id)->at(0));
+
+    ui->valorle->setText(escala->getValor());
+
 }
 
 void EscalaDialog::on_buttonBox_accepted()

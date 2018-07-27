@@ -108,8 +108,32 @@ void EscalaManager::on_addButton_clicked()
 
 void EscalaManager::on_updateButton_clicked()
 {
+    //Check if there is something selected
+    if(ui->tableWidget->selectedItems().empty()){
+        return;
+    }else{
 
+        int result;
+
+        //Get id of object for being searched and filled into dialog
+        int row = ui->tableWidget->selectedItems().at(0)->row();
+        QTableWidgetItem *iditem = ui->tableWidget->item(row,0);
+        int id = iditem->data(0).toInt();
+
+        //Launch dialog with filled values of id
+        EscalaDialog dal(this,id);
+        dal.setWindowTitle("Actualizar escala");
+        result = dal.exec();
+
+        if(result == QDialog::Rejected){
+            return;
+        }
+
+        Escala escala = dal.escala();
+        man.escaladao.updateRecord(escala);
+    }
 }
+
 
 void EscalaManager::on_deleteButton_clicked()
 {

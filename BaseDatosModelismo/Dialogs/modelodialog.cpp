@@ -36,6 +36,7 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id):
 
     //Fill combo boxes
     ReadDependencies();
+    //Fill data with searched value
     setInputWidgetsData(id);
 }
 
