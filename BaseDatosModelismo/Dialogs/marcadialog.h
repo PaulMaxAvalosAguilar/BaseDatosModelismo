@@ -2,6 +2,7 @@
 #define MARCADIALOG_H
 
 #include <QDialog>
+#include <BaseDatos/marca.h>
 
 namespace Ui {
 class MarcaDialog;
@@ -15,6 +16,8 @@ public:
     explicit MarcaDialog(QWidget *parent = 0);
     ~MarcaDialog();
 
+    Marca marca();
+
 private slots:
     void on_buttonBox_accepted();
 
@@ -22,6 +25,9 @@ private slots:
 
 private:
     Ui::MarcaDialog *ui;
+
+
+    int marcaid;
 };
 
 #endif // MARCADIALOG_H

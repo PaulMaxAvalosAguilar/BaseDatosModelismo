@@ -2,7 +2,7 @@
 #include "ui_marcasmanager.h"
 #include "Dialogs/marcadialog.h"
 #include <QScrollBar>
-#include <QDialog>
+#include <QMessageBox>
 
 MarcasManager::MarcasManager(QWidget *parent) :
     QWidget(parent),
@@ -88,6 +88,23 @@ void MarcasManager::on_addButton_clicked()
     if(result == QDialog::Rejected){
         return;
     }
+
+    //Check if dependencies have records: Not null values
+    //Not null nombre
+
+    //Persist marca
+    Marca marca = dal.marca();
+
+    if(marca.getNombre().isEmpty()){
+        //Checking not null nombre
+        QMessageBox box;
+        box.setText("Tienes que escribir un nombre válido");
+        box.exec();
+        return;
+    }
+
+    man.marcadao.addRecord(marca);
+
 }
 
 void MarcasManager::on_updateButton_clicked()

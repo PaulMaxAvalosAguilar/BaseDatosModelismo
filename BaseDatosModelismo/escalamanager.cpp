@@ -1,5 +1,6 @@
 #include "escalamanager.h"
 #include "ui_escalamanager.h"
+#include "Dialogs/escaladialog.h"
 #include <QScrollBar>
 
 EscalaManager::EscalaManager(QWidget *parent) :
@@ -73,7 +74,17 @@ void EscalaManager::updateTable()
 
 void EscalaManager::on_addButton_clicked()
 {
+    int result;
 
+    //Launch dialog
+    EscalaDialog dal(this);
+    dal.setWindowTitle("Añadir Marca");
+    result = dal.exec();
+
+    //Check if dialog was accepted
+    if(result == QDialog::Rejected){
+        return;
+    }
 }
 
 void EscalaManager::on_updateButton_clicked()
