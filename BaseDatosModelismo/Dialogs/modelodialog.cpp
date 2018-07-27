@@ -51,17 +51,29 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id, bool visibility):
 {
     ui->setupUi(this);
 
+    //Read database / Object source charged in RAM
     unique_ptr<Modelo> modelo =std::move(man.modelodao.getRecord(id)->at(0));
+
+    //Create list of dependencies for testing emptiness
+    unique_ptr<vector<unique_ptr<Marca>>> marca;
+    unique_ptr<vector<unique_ptr<Escala>>> escala;
+
+    //Get current object foreign keys values
     int numeroMarca = modelo->getMarca();
     int numeroEscala = modelo->getEscala();
 
-    unique_ptr<Marca> marca = std::move(
-                man.marcadao.getRecord(numeroMarca)->at(0));
-    unique_ptr<Escala> escala = std::move(
-                man.escaladao.getRecord(numeroEscala)->at(0));
+    //Search wheter dependencies exist or not
+    marca = std::move(man.marcadao.getRecord(numeroMarca));
+    escala = std::move(man.escaladao.getRecord(numeroEscala));
 
-    ui->marcaCB->addItem(marca->getNombre(), QVariant::fromValue(*marca));
-    ui->escalaCB->addItem(escala->getValor(), QVariant::fromValue(*escala));
+
+    if(!(marca->empty())){
+    unique_ptr<Marca> marcaptr = std::move(marca->at(0));
+    unique_ptr<Escala> escalaptr = std::move(escala->at(0));
+
+    ui->marcaCB->addItem(marcaptr->getNombre(), QVariant::fromValue(*marcaptr));
+    ui->escalaCB->addItem(escalaptr->getValor(), QVariant::fromValue(*escalaptr));
+    }
 
     //Fill combo boxes
     setInputWidgetsData(id);
