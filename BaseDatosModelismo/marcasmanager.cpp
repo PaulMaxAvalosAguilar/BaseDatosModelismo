@@ -130,9 +130,24 @@ void MarcasManager::on_updateButton_clicked()
             return;
         }
 
-        Marca marca = dal.marca();
-        man.marcadao.updateRecord(marca);
 
+        //Check if dependencies have records: Not null values
+        //Not null nombre
+
+        //Checking not null marcas or escalas
+
+        //Persist modelo dao
+        Marca marca = dal.marca();
+
+        if(marca.getNombre().isEmpty()){
+            //Checking not null nombre
+            QMessageBox box;
+            box.setText("Tienes que escribir un nombre válido");
+            box.exec();
+            return;
+        }
+
+        man.marcadao.updateRecord(marca);
     }
 }
 

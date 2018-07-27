@@ -129,8 +129,21 @@ void EscalaManager::on_updateButton_clicked()
             return;
         }
 
+        //Check if dependencies have records: Not null values
+        //Not null valor
+
+        //Persist marca
         Escala escala = dal.escala();
-        man.escaladao.updateRecord(escala);
+
+        if(escala.getValor().isEmpty()){
+            //Checking not null nombre
+            QMessageBox box;
+            box.setText("Tienes que escribir un valor válido");
+            box.exec();
+            return;
+        }
+
+        man.escaladao.addRecord(escala);
     }
 }
 
