@@ -3,7 +3,8 @@
 
 EscalaDialog::EscalaDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::EscalaDialog)
+    ui(new Ui::EscalaDialog),
+    escalaid(0)
 {
     ui->setupUi(this);
 }
@@ -11,6 +12,17 @@ EscalaDialog::EscalaDialog(QWidget *parent) :
 EscalaDialog::~EscalaDialog()
 {
     delete ui;
+}
+
+Escala EscalaDialog::escala()
+{
+    Escala escala;
+
+    escala.setId(escalaid);
+    //Get dialog values and add them to Modelo object
+    escala.setValor(ui->valorle->text());
+
+    return escala;
 }
 
 void EscalaDialog::on_buttonBox_accepted()

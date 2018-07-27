@@ -2,6 +2,7 @@
 #include "ui_escalamanager.h"
 #include "Dialogs/escaladialog.h"
 #include <QScrollBar>
+#include <QMessageBox>
 
 EscalaManager::EscalaManager(QWidget *parent) :
     QWidget(parent),
@@ -85,7 +86,25 @@ void EscalaManager::on_addButton_clicked()
     if(result == QDialog::Rejected){
         return;
     }
+
+
+    //Check if dependencies have records: Not null values
+    //Not null valor
+
+    //Persist marca
+    Escala escala = dal.escala();
+
+    if(escala.getValor().isEmpty()){
+        //Checking not null nombre
+        QMessageBox box;
+        box.setText("Tienes que escribir un valor válido");
+        box.exec();
+        return;
+    }
+
+    man.escaladao.addRecord(escala);
 }
+
 
 void EscalaManager::on_updateButton_clicked()
 {

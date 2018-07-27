@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="valorlineEdit"/>
+      <widget class="QLineEdit" name="valorle"/>
      </item>
     </layout>
    </item>
