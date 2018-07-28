@@ -23,6 +23,11 @@ public:
 
     std::unique_ptr<std::vector<std::unique_ptr<Modelo>>> getRecord(int recordId) const;
 
+    std::unique_ptr<std::vector<std::unique_ptr<Modelo>>>
+    getRecordbyMarca(int recordId) const;
+
+    std::unique_ptr<std::vector<std::unique_ptr<Modelo>>>
+    getRecordbyEscala(int recordId) const;
 
 signals:
     void addedRecord();

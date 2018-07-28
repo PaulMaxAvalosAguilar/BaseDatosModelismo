@@ -113,7 +113,7 @@ void ModelosManager::updateTable()
         //Search whether dependencies exist or not
 
 
-        //Fill dependencies properly
+
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  id, new QTableWidgetItem(
                                      QString::number(

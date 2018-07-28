@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "BaseDatos/DatabaseManager/databasemanager.h"
 #include "BaseDatos/escala.h"
+#include "BaseDatos/modelo.h"
 #include <memory>
 
 namespace Ui {

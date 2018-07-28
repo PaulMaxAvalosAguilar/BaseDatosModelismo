@@ -4,6 +4,8 @@
 #include <QScrollBar>
 #include <QMessageBox>
 
+using namespace std;
+
 EscalaManager::EscalaManager(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::EscalaManager),
@@ -174,6 +176,34 @@ void EscalaManager::on_deleteButton_clicked()
 
         //Remove object
         Escala escala = dal.escala();
+
+        //Read dependants
+        unique_ptr<vector<unique_ptr<Modelo>>> dependants;
+        dependants = std::move(man.modelodao.getRecordbyEscala(escala.getId()));
+
+        //Check if dependants list is empty
+        if(!(dependants->empty())){
+
+            //Advice user about possible orphan dependants
+            int result;
+
+            QString texto;
+            texto.append("El registro que quieres eliminar");
+            texto.append(" tiene: ");
+            texto.append( QString::number(dependants->size()));
+            texto.append(" dependientes\n¿Seguro que deseas eliminarlo?");
+
+            QMessageBox box;
+            box.setText(texto);
+            box.setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+            result = box.exec();
+
+            if(result == QMessageBox::Cancel){
+                return;
+            }
+
+        }
+
         man.escaladao.removeRecord(escala.getId());
     }
 }
