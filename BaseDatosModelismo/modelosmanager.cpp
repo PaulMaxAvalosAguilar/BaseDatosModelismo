@@ -3,6 +3,8 @@
 #include "Dialogs/modelodialog.h"
 #include "BaseDatos/modelo.h"
 #include "BaseDatos/modelodao.h"
+#include "BaseDatos/marcadao.h"
+#include "BaseDatos/escaladao.h"
 #include "BaseDatos/marca.h"
 #include "BaseDatos/escala.h"
 #include <QScrollBar>
@@ -28,6 +30,14 @@ ModelosManager::ModelosManager(QWidget *parent) :
     connect(&man.modelodao, SIGNAL(addedRecord()),this, SLOT(updateTable()));
     connect(&man.modelodao, SIGNAL(updatedRecord()),this, SLOT(updateTable()));
     connect(&man.modelodao, SIGNAL(removedRecord()),this, SLOT(updateTable()));
+    //Check needed updates of table because of dependencies
+    connect(&man.marcadao, SIGNAL(addedRecord()), this, SLOT(updateTable()));
+    connect(&man.marcadao, SIGNAL(updatedRecord()), this, SLOT(updateTable()));
+    connect(&man.marcadao, SIGNAL(removedRecord()), this, SLOT(updateTable()));
+
+    connect(&man.escaladao, SIGNAL(addedRecord()), this, SLOT(updateTable()));
+    connect(&man.escaladao, SIGNAL(updatedRecord()), this, SLOT(updateTable()));
+    connect(&man.escaladao, SIGNAL(removedRecord()), this, SLOT(updateTable()));
 
 }
 
@@ -94,7 +104,7 @@ void ModelosManager::updateTable()
         ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
                                  Escalac, new QTableWidgetItem(
 
-                                     (marca->empty())?
+                                     (escala->empty())?
                                          0
                                        :escala->at(0)->getValor()
 
