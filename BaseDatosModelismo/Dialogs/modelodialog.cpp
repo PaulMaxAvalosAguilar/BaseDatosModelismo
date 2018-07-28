@@ -72,7 +72,7 @@ ModeloDialog::ModeloDialog(QWidget *parent, int id, bool visibility):
         ui->marcaCB->addItem(marcaptr->getNombre(), QVariant::fromValue(*marcaptr));
     }
 
-    if(!(marca->empty())){
+    if(!(escala->empty())){
         unique_ptr<Escala> escalaptr = std::move(escala->at(0));
         ui->escalaCB->addItem(escalaptr->getValor(), QVariant::fromValue(*escalaptr));
     }
@@ -147,7 +147,7 @@ void ModeloDialog::setInputWidgetsData(int id)
 
     unique_ptr<Marca> marcaptr = (marca->empty())? nullptr
                                                  : std::move(marca->at(0)) ;
-    unique_ptr<Escala> escalaptr = (marca->empty())? nullptr
+    unique_ptr<Escala> escalaptr = (escala->empty())? nullptr
                                                    :std::move(escala->at(0));
     //Search wheter dependencies exist or not
 
