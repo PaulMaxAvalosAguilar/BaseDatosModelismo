@@ -3,6 +3,7 @@
 #include <memory>
 #include <vector>
 #include <QObject>
+#include <QString>
 
 class QSqlDatabase;
 class Modelo;
@@ -28,6 +29,10 @@ public:
 
     std::unique_ptr<std::vector<std::unique_ptr<Modelo>>>
     getRecordbyEscala(int recordId) const;
+
+    std::unique_ptr<std::vector<std::unique_ptr<Modelo>>>
+    getRecordbyNombreLike(QString textoBuscado) const;
+
 
 signals:
     void addedRecord();

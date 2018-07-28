@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>300</height>
+    <height>344</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,6 +26,23 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="QLineEdit" name="searchle"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="searchPb">
+       <property name="text">
+        <string>Buscar</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
    <item>
     <widget class="QTableWidget" name="tableWidget">
      <property name="sizePolicy">
@@ -68,7 +85,7 @@
       <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderVisible">
-      <bool>true</bool>
+      <bool>false</bool>
      </attribute>
      <attribute name="verticalHeaderHighlightSections">
       <bool>true</bool>

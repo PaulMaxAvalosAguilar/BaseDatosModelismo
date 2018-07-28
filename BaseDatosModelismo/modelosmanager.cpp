@@ -58,6 +58,84 @@ void ModelosManager::configureTablesettings()
     ui->tableWidget->hideColumn(0);
 }
 
+void ModelosManager::updateTableCoincidenceSearch(QString textoBuscado)
+{
+    //GET CURRENT SCROLLBARS POSITIONS
+    QScrollBar *verticalScroll = ui->tableWidget->verticalScrollBar();
+    QScrollBar *horizontalScroll = ui->tableWidget->verticalScrollBar();
+    int lastVscrollposition = verticalScroll->value();
+    int lastHscrollposition = horizontalScroll->value();
+    //GET CURRENT SCROLLBARS POSITIONS
+
+
+    //Read database/ Objects source charged in RAM
+    listaModelos = man.modelodao.getRecordbyNombreLike(textoBuscado);
+
+    //Erase table contents
+    ui->tableWidget->setRowCount(0);
+
+    //Create list of dependencies for testing emptiness
+    std::unique_ptr<std::vector<std::unique_ptr<Marca>>> marca;
+    std::unique_ptr<std::vector<std::unique_ptr<Escala>>> escala;
+
+
+    //Set table contents
+    for(uint i = 0; i < listaModelos->size(); i++){
+        ui->tableWidget->insertRow(ui->tableWidget->rowCount());
+
+        //Get current object foreign keys values
+        int numeromarcaBuscada = listaModelos->at(i)->getMarca();
+        int numeroescalaBuscada = listaModelos->at(i)->getEscala();
+
+        //Search whether dependencies exist or not
+        marca  = std::move(man.marcadao.getRecord(numeromarcaBuscada));
+        escala = std::move(man.escaladao.getRecord(numeroescalaBuscada));
+
+
+        //Fill dependencies properly
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Marcac, new QTableWidgetItem(
+
+                                     (marca->empty())?
+                                         0
+                                       :marca->at(0)->getNombre()
+
+                                         ));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Escalac, new QTableWidgetItem(
+
+                                     (escala->empty())?
+                                         0
+                                       :escala->at(0)->getValor()
+
+                                         ));
+
+        //Search whether dependencies exist or not
+
+
+
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 id, new QTableWidgetItem(
+                                     QString::number(
+                                         listaModelos->at(i)->getId())));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Codigo, new QTableWidgetItem(
+                                     listaModelos->at(i)->getCodigo()));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Nombre, new QTableWidgetItem(
+                                     listaModelos->at(i)->getNombre()));
+        ui->tableWidget->setItem(ui->tableWidget->rowCount()-1,
+                                 Unidades, new QTableWidgetItem(
+                                     QString::number(
+                                         listaModelos->at(i)->getNumeroUnidades())));
+    }
+
+    //RESET SCROLLBARS POSITIONS
+    verticalScroll->setValue(lastVscrollposition);
+    horizontalScroll->setValue(lastHscrollposition);
+    //RESET SCROLLBARS POSIITONS
+}
+
 void ModelosManager::updateTable()
 {
 
@@ -67,6 +145,7 @@ void ModelosManager::updateTable()
     int lastVscrollposition = verticalScroll->value();
     int lastHscrollposition = horizontalScroll->value();
     //GET CURRENT SCROLLBARS POSITIONS
+
 
     //Read database/ Objects source charged in RAM
     listaModelos = man.modelodao.getAllRecords();
@@ -277,5 +356,15 @@ void ModelosManager::on_tableWidget_cellDoubleClicked(int row, int column)
     //Check if dialog was accepted
     if(result == QDialog::Rejected){
         return;//Dialog should be rejected in all cases
+    }
+}
+
+void ModelosManager::on_searchPb_clicked()
+{
+    if(!ui->searchle->text().isEmpty()){ 
+        updateTableCoincidenceSearch(ui->searchle->text());
+    }else{
+
+        updateTable();
     }
 }

@@ -21,6 +21,7 @@ public:
     ~ModelosManager();
 
     void configureTablesettings();
+    void updateTableCoincidenceSearch(QString textoBuscado);
 
 private slots:
 
@@ -30,12 +31,13 @@ private slots:
     void on_addPB_clicked();
 
 
-
     void on_updPB_clicked();
 
     void on_delPB_clicked();
 
     void on_tableWidget_cellDoubleClicked(int row, int column);
+
+    void on_searchPb_clicked();
 
 private:
     Ui::ModelosManager *ui;
