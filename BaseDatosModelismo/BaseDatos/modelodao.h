@@ -33,6 +33,12 @@ public:
     std::unique_ptr<std::vector<std::unique_ptr<Modelo>>>
     getRecordbyNombreLike(QString textoBuscado) const;
 
+    void createIndexonColumnMarca();
+    void createIndexonColumnCodigo();
+    void createIndexonColumnNombre();
+    void createIndexonColumnEscala();
+    void createIndexonColumnNumeroUnidades();
+
 
 signals:
     void addedRecord();

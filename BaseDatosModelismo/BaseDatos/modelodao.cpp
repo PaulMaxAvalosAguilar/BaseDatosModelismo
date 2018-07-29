@@ -167,3 +167,33 @@ std::unique_ptr<std::vector<std::unique_ptr<Modelo> > > ModeloDao::getRecordbyNo
     }
     return list;
 }
+
+void ModeloDao::createIndexonColumnMarca(){
+    QSqlQuery query("create index marca on Modelo(marca)", mDatabase);
+    query.exec();
+    DatabaseManager::debugQuery(query);
+}
+
+void ModeloDao::createIndexonColumnCodigo(){
+    QSqlQuery query("create index codigo on Modelo(codigo)", mDatabase);
+    query.exec();
+    DatabaseManager::debugQuery(query);
+}
+
+void ModeloDao::createIndexonColumnNombre(){
+    QSqlQuery query("create index nombre on Modelo(nombre)", mDatabase);
+    query.exec();
+    DatabaseManager::debugQuery(query);
+}
+
+void ModeloDao::createIndexonColumnEscala(){
+    QSqlQuery query("create index escala on Modelo(escala)", mDatabase);
+    query.exec();
+    DatabaseManager::debugQuery(query);
+}
+
+void ModeloDao::createIndexonColumnNumeroUnidades(){
+    QSqlQuery query("create index numeroUnidades on Modelo(numeroUnidades)", mDatabase);
+    query.exec();
+    DatabaseManager::debugQuery(query);
+}
